@@ -1,4 +1,4 @@
-#include "dob.h"
+/*#include "dob.h"
 
 
 dob::dob(short day, short month, short year)
@@ -17,18 +17,21 @@ void dob::SetDay(short day)
 {
 if (day>0&&day<=AllowedDay())
 	this->day = day;
+else this->day=1;
 }
 
 void dob::SetMonth(short month)
 {
 	if (month > 0 && month <=12)
 		this->month = month;
+	else this->month=1;
 }
 
 void dob::SetYear(short year)
 {
 	if (year < 2015)
 		this->year = year;
+	else this->year=1;
 }
 short dob::AllowedDay()
 {
@@ -43,4 +46,4 @@ short dob::AllowedDay()
 	if (month == 2 && b > 0)
 		a = 28;
 	return a;
-}
+}*/

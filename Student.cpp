@@ -1,12 +1,13 @@
 #include "Student.h"
-#include"dob.h"
+//#include"dob.h"
 
-Student::Student(char*name,char*secondname,char*lastname, dob date)
+//class dob;
+Student::Student(char*name,char*secondname,char*lastname/*, dob date*/)
 {
 	SetName(name);
 	SetSecondname(secondname);
 	SetLastname(lastname);
-	SetDate(date);
+	//SetDate(date);
 }
 
 Student::Student()
@@ -14,7 +15,7 @@ Student::Student()
 	char*name = "ivan";
 	char*secondname = "ivanovich";
 	char*lastname = "ivanov";
-	dob date = date;
+	//dob = aa;
 }
 
 Student::~Student()
@@ -23,7 +24,7 @@ Student::~Student()
 
 char* Student::GetName()const
 {
-	char*copyName = new char[strlen(this->name) + 1];
+	char*copyName = new char[strlen(Student::name) + 1];
 	strcpy_s(copyName, (strlen(this->name)+1), this->name);
 		return copyName;
 }
@@ -70,7 +71,7 @@ void Student::SetLastname(char*lastname)
 	this->lastname = new char[strlen(lastname) + 1];
 	strcpy_s(this->name, (strlen(lastname) + 1), lastname);
 }
-void Student::SetDate(dob date)
+/*void Student::SetDate(dob date)
 {
-	this->date = date;
-}
+	this->aa = date;
+}*/

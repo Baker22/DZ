@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include<iostream>
 using namespace std;
 class dob
@@ -15,8 +15,8 @@ public:
 	void SetDay(short day);
 	void SetMonth(short month);
 	void SetYear(short year);
-	dob() :dob(0, 0, 0){};
+	dob() :dob(10,12,10){};
 	dob(short day, short month, short year);
 	~dob();
-};
+};*/
 

@@ -9,7 +9,7 @@ class Student
 	char*name;
 	char*secondname;
 	char*lastname;
-	//dob aa;
+	/*dob aa*/;
 public:
 	char *GetName()const;
 	char *GetSecondname()const;

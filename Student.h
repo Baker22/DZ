@@ -11,7 +11,7 @@ class Student
 	char*lastname;
 	/*dob aa*/;
 public:
-	char *GetName()const;
+	char *GetName();
 	char *GetSecondname()const;
 	char *GetLastname()const;
 	//dob GetDate()const;

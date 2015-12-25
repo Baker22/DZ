@@ -22,9 +22,9 @@ Student::~Student()
 {
 }
 
-char* Student::GetName()const
+char* Student::GetName()
 {
-	char*copyName = new char[strlen(Student::name) + 1];
+	char*copyName = new char[strlen(this->name) + 1];
 	strcpy_s(copyName, (strlen(this->name)+1), this->name);
 		return copyName;
 }

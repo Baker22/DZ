@@ -1,28 +1,31 @@
 #pragma once
 #include <iostream>
-//#include"dob.h"
+#include"Dob.h"
+#include"Adress.h"
 using namespace std;
 
-//class dob;
+class Adress;
+class Dob;
 class Student
 {
+	char*phone;
 	char*name;
 	char*secondname;
 	char*lastname;
-	/*dob aa*/;
+	Dob birthday;
 public:
-	char *GetName();
+	char *GetPhone()const;
+	char *GetName()const;
 	char *GetSecondname()const;
 	char *GetLastname()const;
-	//dob GetDate()const;
-
+	Dob & GetBirthday(){ return this->birthday; }
+	void SetPhone(char* phone);
 	void SetName(char*name);
 	void SetSecondname(char*secondname);
 	void SetLastname(char*lastname);
-	//void SetDate(dob date);
+	void SetBirthday(Dob & birthday);
 	Student();
-	Student(char*name,char*secondname,char*lastname/*, dob date*/);
-	void ShowInfo();
+	Student(char* phone,char*name,char*secondname,char*lastname);
 	~Student();
 };
 

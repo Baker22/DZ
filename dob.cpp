@@ -1,5 +1,11 @@
 #include "Dob.h"
 
+Dob ::Dob()
+{
+	day = 0;
+	month = 0;
+	year = 0;
+}
 
 Dob::Dob(short day, short month, short year)
 {
@@ -11,6 +17,25 @@ Dob::Dob(short day, short month, short year)
 
 Dob::~Dob()
 {
+}
+
+short Dob::GetDay()const
+{
+	if (!day)
+		return 1;
+	return day;
+}
+short Dob::GetMonth()const
+{
+if (!month)
+		return 1;
+	return month;
+}
+short Dob::GetYear()const
+{
+if (!year)
+  return 1;
+	return year;
 }
 
 void Dob::SetDay(short day)

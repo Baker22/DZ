@@ -6,6 +6,7 @@ class Adress
 	char*home;
 	char*street;
 	char*city;
+
 public:
 	char*GetHome()const;
 	char*GetStreet()const;

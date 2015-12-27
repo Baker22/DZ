@@ -71,22 +71,26 @@ char* Student::GetLastname()const
 		return lastname;
 }
 
+char* Student::GetExams()const
+{
+	char*result = new char[10];
+	for (int i = examsSize; i >= 0; i--)
+	{
+		 _itoa_s(exams[i], result,3, 10);
+		 return result;
+	}
+}
 void Student::SetPhone(char* phone)
 {
-	if (phone > 0)
-	{
 		if (this->phone)
-		{
-			delete[]this->phone;
-			this->phone = nullptr;
-		}
-		this->phone = phone;
-	}
-		
+		delete[]this->phone;
+		this->phone = nullptr;
+		this->phone = new char[strlen(phone)+1];
+		strcpy_s(this->phone, (strlen(phone) + 1), phone);
 }
 void Student::SetName(char*name)
 {
-	if (this->name);
+	if (this->name)
 	delete[]this->name;
 	this->name = nullptr;
 	this->name = new char[strlen(name) + 1];
@@ -95,7 +99,7 @@ void Student::SetName(char*name)
 
 void Student::SetSecondname(char*secondname)
 {
-	if (this->secondname);
+	if (this->secondname)
 	delete[]this->secondname;
 	this->secondname = nullptr;
 	this->secondname = new char[strlen(secondname) + 1];
@@ -104,7 +108,7 @@ void Student::SetSecondname(char*secondname)
 
 void Student::SetLastname(char*lastname)
 {
-	if (this->lastname);
+	if (this->lastname)
 	delete[]this->lastname;
 	this->lastname = nullptr;
 	this->lastname = new char[strlen(lastname) + 1];
@@ -115,4 +119,28 @@ void Student::SetBirthday(Dob & birthday)
 {
 	this->birthday = birthday;
 }
+
+void Student::SetSomeGrade(ushort*&arr, ushort &size, ushort grade)
+{
+	ushort*temp = new ushort[size + 1];
+	for (int i = 0; i < size; i++)
+		temp[i] = arr[i];
+	temp[size] = grade;
+	delete[]arr;
+	arr = temp;
+	size++;
+}
+void Student::SetExam(ushort grade)
+{
+	SetSomeGrade(exams,examsSize,grade);
+}
+void Student::SetCourse(ushort grade)
+{
+	SetSomeGrade(courses, coursesSize, grade);
+}
+void Student::SetTest(ushort grade)
+{
+	SetSomeGrade(tests, testsSize, grade);
+}
+
 

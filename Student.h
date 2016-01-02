@@ -1,4 +1,5 @@
 #pragma once
+#include<string.h>
 #include <iostream>
 #include"Dob.h"
 #include"Adress.h"
@@ -25,9 +26,7 @@ public:
 	char *GetName()const;
 	char *GetSecondname()const;
 	char *GetLastname()const;
-	char* GetExams()const;
-	//ushort*GetExams()const;
-	//ushort*GetExams()const;
+	char* GetExams();
 	Dob & GetBirthday(){ return this->birthday; }
 	void SetPhone(char* phone);
 	void SetName(char*name);

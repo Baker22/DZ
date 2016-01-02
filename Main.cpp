@@ -1,4 +1,5 @@
 #include<iostream>
+#include"Bank.h"
 #include"Student.h"
 #include"Dob.h"
 #include"Adress.h"
@@ -15,6 +16,7 @@ void ShowStud(Student & student,Dob & date,Adress & adress)
 
 void main()
 {
+	
 	Adress aaa;
 	Dob aa;
 	Student a;
@@ -26,7 +28,4 @@ void main()
 	a.SetExam(9);
 	a.SetExam(8);
 	cout<<a.GetExams();
-	//aa.SetDay(35);
-	//cout << aaa.GetStreet()<<aaa.GetHome()<<endl;
-	//cout << aa.GetMonth()<<endl;
 }

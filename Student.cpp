@@ -1,6 +1,7 @@
 #include "Student.h"
 #include"Dob.h"
 #include"Adress.h"
+#include<string.h>
 
 class Adress;
 class dob;
@@ -71,14 +72,20 @@ char* Student::GetLastname()const
 		return lastname;
 }
 
-char* Student::GetExams()const
+char* Student::GetExams()
 {
-	char*result = new char[10];
-	for (int i = examsSize; i >= 0; i--)
+	char *temp=new char[3];
+	char*res = new char[50];
+	int lenght=0;
+	strcpy_s(res, 6, "Exams");
+	for (int i =0;i<examsSize; i++)
 	{
-		 _itoa_s(exams[i], result,3, 10);
-		 return result;
-	}
+		_itoa_s(exams[i],temp, 3, 10);
+		lenght += strlen(temp)+1;
+		strcat_s(res,lenght,temp);
+	}	
+	
+	return res;
 }
 void Student::SetPhone(char* phone)
 {

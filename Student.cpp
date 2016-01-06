@@ -74,15 +74,17 @@ char* Student::GetLastname()const
 
 char* Student::GetExams()
 {
+	
+	char*res = new char[250];
 	char *temp=new char[3];
-	char*res = new char[50];
 	int lenght=0;
-	strcpy_s(res, 6, "Exams");
+	strcpy_s(res, 7, "Exams:");
 	for (int i =0;i<examsSize; i++)
 	{
 		_itoa_s(exams[i],temp, 3, 10);
-		lenght += strlen(temp)+1;
-		strcat_s(res,lenght,temp);
+		strcat_s(res,250,temp);
+		strcat_s(res,250,",");
+
 	}	
 	
 	return res;

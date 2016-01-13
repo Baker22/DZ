@@ -25,6 +25,7 @@ public:
 	char *GetName()const;
 	char *GetSecondname()const;
 	char *GetLastname()const;
+	char*Get1Exam(ushort index);
 	char* GetExams();
 	char* GetBirthday();
 	char*FullName();

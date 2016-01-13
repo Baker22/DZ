@@ -101,6 +101,15 @@ char* Student::GetExams()
 	
 	return res;
 }
+
+char*Student::Get1Exam(ushort index)
+{
+	char*temp = new char[3];
+	_itoa_s(exams[index-1],temp,3,10);
+	char*res = new char[strlen(temp) + 1];
+	strcpy_s(res, strlen(temp) + 1, temp);
+	return res;
+}
 void Student::SetPhone(char* phone)
 {
 		if (this->phone)

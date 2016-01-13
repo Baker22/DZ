@@ -18,7 +18,7 @@ void ShowStud(Student & student,Dob & date,Adress & adress)
 void main()
 {
 	
-	/*Adress aaa;
+	Adress aaa;
 	Dob aa(22,10,1981);
 	Student a;
 	a.SetBirthday(aa);
@@ -37,7 +37,8 @@ void main()
 	cout << x.StudentsInfo();
 	cout << aa.ShowDob();
 	cout << a.GetBirthday();
-	cout << a.FullName()<<endl;*/
+	cout << a.FullName()<<endl;
 	Group y(7);
 	cout << y.GroupList();
+	cout<<a.Get1Exam(2);
 }

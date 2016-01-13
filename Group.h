@@ -30,8 +30,7 @@ public:
 	Group(Group & other);
 	~Group(){};
 	void AddStudToGroup(Student & student);
-	Group GroupCopy(Group & other);
 	char*GroupList();
 	char*GroupInfo();
-	char*StudentsInfo();
+	void*GroupUnion();
 };

@@ -140,9 +140,7 @@ char*temp = new char[250];
 		return res;
 }
 
-char*Group::StudentsInfo()
+void*Group::GroupUnion()
 {
-	//for (int i = 0; i < group_size;i++)
-	Student&ShowStud();
-	return "1";
+	
 }

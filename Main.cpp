@@ -33,8 +33,8 @@ void main()
 	
 	Group x("VPD","Programmers","1511");
 	cout << x.GetGroup_name()<<x.GetGroup_spec()<<x.GetCourse_num()<<endl;
-	//cout << x.GroupList();
-	cout << x.StudentsInfo();
+    cout << x.GroupList();
+	cout << x.GroupUnion();
 	cout << aa.ShowDob();
 	cout << a.GetBirthday();
 	cout << a.FullName()<<endl;

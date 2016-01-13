@@ -3,6 +3,7 @@
 #include"Student.h"
 #include"Dob.h"
 #include"Adress.h"
+#include"Group.h"
 
 using namespace std;
 
@@ -17,9 +18,10 @@ void ShowStud(Student & student,Dob & date,Adress & adress)
 void main()
 {
 	
-	Adress aaa;
-	Dob aa;
+	/*Adress aaa;
+	Dob aa(22,10,1981);
 	Student a;
+	a.SetBirthday(aa);
 	a.SetName("Alexey");
 	a.SetSecondname("Nickolaevich");
 	a.SetLastname("Feshchuk");
@@ -27,5 +29,15 @@ void main()
 	a.SetExam(10);
 	a.SetExam(9);
 	a.SetExam(8);
-	cout<<a.GetExams();
+	cout<<a.GetExams()<<endl;
+	
+	Group x("VPD","Programmers","1511");
+	cout << x.GetGroup_name()<<x.GetGroup_spec()<<x.GetCourse_num()<<endl;
+	//cout << x.GroupList();
+	cout << x.StudentsInfo();
+	cout << aa.ShowDob();
+	cout << a.GetBirthday();
+	cout << a.FullName()<<endl;*/
+	Group y(7);
+	cout << y.GroupList();
 }

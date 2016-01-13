@@ -18,5 +18,6 @@ public:
 	Dob();
 	Dob(short day, short month, short year);
 	~Dob();
+	char*ShowDob();
 };
 

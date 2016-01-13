@@ -6,8 +6,7 @@
 using namespace std;
 typedef unsigned short ushort;
 
-class Adress;
-class Dob;
+
 class Student
 {
 	char*phone;
@@ -27,12 +26,14 @@ public:
 	char *GetSecondname()const;
 	char *GetLastname()const;
 	char* GetExams();
-	Dob & GetBirthday(){ return this->birthday; }
+	char* GetBirthday();
+	char*FullName();
+	Student BasicStudent();
 	void SetPhone(char* phone);
 	void SetName(char*name);
 	void SetSecondname(char*secondname);
 	void SetLastname(char*lastname);
-	void SetBirthday(Dob & birthday);
+	void SetBirthday(Dob birthday);
 	void SetSomeGrade(ushort*&arr, ushort &size, ushort grade);
 	void SetExam(ushort grade);
 	void SetCourse(ushort grade);

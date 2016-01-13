@@ -72,3 +72,21 @@ short Dob::AllowedDay()
 		a = 28;
 	return a;
 }
+
+char*Dob::ShowDob()
+{
+	char*re = new char[250];
+	char*temp = new char[250];
+	_itoa_s(this->day, temp, 3, 10);
+	strcpy_s(re, strlen(temp) + 1, temp);
+	strcat_s(re, 250, ".");
+	_itoa_s(this->month, temp, 3, 10);
+	strcat_s(re, 250,temp);
+	strcat_s(re, 250, ".");
+	_itoa_s(this->year, temp, 5, 10);
+	strcat_s(re, 250,temp);
+	strcat_s(re, 250, ".\n");
+	char*res = new char[strlen(re) + 1];
+	strcpy_s(res, strlen(re) + 1, re);
+	return res;
+}

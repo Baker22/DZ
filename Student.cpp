@@ -3,8 +3,7 @@
 #include"Adress.h"
 #include<string.h>
 
-class Adress;
-class dob;
+
 Student::Student(char* phone,char*name,char*secondname,char*lastname)
 {
 	SetPhone(phone);
@@ -72,6 +71,19 @@ char* Student::GetLastname()const
 		return lastname;
 }
 
+char*Student::FullName()
+{
+	char *temp = new char[250];
+	strcpy_s(temp, strlen(GetName()) + 1, GetName());
+	strcat_s(temp, 250, " ");
+	strcat_s(temp, 250, GetSecondname());
+	strcat_s(temp, 250, " ");
+	strcat_s(temp, 250, GetLastname());
+	strcat_s(temp, 250, " ");
+	char*res = new char[strlen(temp) + 1];
+	strcpy_s(res, strlen(temp) + 1, temp);
+	return res;
+}
 char* Student::GetExams()
 {
 	
@@ -124,7 +136,7 @@ void Student::SetLastname(char*lastname)
 	strcpy_s(this->lastname, (strlen(lastname) + 1), lastname);
 }
 
-void Student::SetBirthday(Dob & birthday)
+void Student::SetBirthday(Dob birthday)
 {
 	this->birthday = birthday;
 }
@@ -150,6 +162,21 @@ void Student::SetCourse(ushort grade)
 void Student::SetTest(ushort grade)
 {
 	SetSomeGrade(tests, testsSize, grade);
+}
+
+char*Student:: GetBirthday()
+{
+	return birthday.ShowDob();
+}
+
+Student Student::BasicStudent()
+{
+	Student x;
+	x.phone = "No phone";
+	x.name = "No name";
+	x.secondname = "No secondname";
+	x.lastname = "No lastname";
+	return x;
 }
 
 

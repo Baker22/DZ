@@ -1,19 +1,20 @@
 #include"Bank.h"
 using namespace std;
+
+uint Bank::mainBall = 0;
 Bank::Bank()
 {
 	uint fillBall = 0;
-	uint mainBall = 0;
 	ushort sizeFil = 0;
-	uint sizeDep=0;
-	uint sizeCred=0;
-	uint *deposit=nullptr;
-	uint*credit=nullptr;
+	uint sizeDep = 0;
+	uint sizeCred = 0;
+	uint *deposit = nullptr;
+	uint*credit = nullptr;
 	uint*creditNum = nullptr;
-	uint *filials=nullptr;
+	uint *filials = nullptr;
 	ushort persent = 0;
 }
-Bank::Bank(uint filBall,ushort persent)
+Bank::Bank(uint filBall, ushort persent)
 {
 	SetFilBall(filBall);
 	SetPersent(persent);
@@ -31,9 +32,9 @@ uint Bank::GetFilBall()const
 	return filBall;
 }
 
-uint Bank::GetMainBall()const
+uint Bank::GetMainBall()
 {
-	return mainBall;
+	return Bank::mainBall;
 }
 
 void Bank::SetFilBall(uint filBall)
@@ -48,7 +49,7 @@ void Bank::SetFilBall(uint filBall)
 void Bank::SetMainBall()
 {
 	for (int i = 0; i < sizeFil; i++)
-		this->mainBall += filials[i];
+		Bank::mainBall += filials[i];
 }
 
 void Bank::SetPersent(ushort persent)
@@ -69,10 +70,10 @@ void Bank::AddNewFil(uint ball)
 void Bank::FormDeposit(uint dep)
 {
 	if (dep>0)
-	mainBall += dep;
+		Bank::mainBall += dep;
 	uint*temp = new uint[sizeDep + 1];
 	for (uint i = 0; i < sizeDep; i++)
-	temp[i] = deposit[i];
+		temp[i] = deposit[i];
 	temp[sizeDep] = dep;
 	delete[]deposit;
 	deposit = temp;
@@ -81,34 +82,34 @@ void Bank::FormDeposit(uint dep)
 double Bank::FormCredit(double cred)
 {
 	if (cred>0)
-	mainBall -= cred;
+		Bank::mainBall -= cred;
 	uint*temp = new uint[sizeCred + 1];
 	uint*tempNum = new uint[sizeCred + 1];
 	for (uint i = 0; i < sizeCred; i++)
 	{
-	tempNum[i] = creditNum[i];
-	temp[i] = credit[i];
+		tempNum[i] = creditNum[i];
+		temp[i] = credit[i];
 	}
 	tempNum[sizeCred] = cred;
-	temp[sizeCred] = cred+((cred/100)*persent);
+	temp[sizeCred] = cred + ((cred / 100)*persent);
 	delete[]credit;
 	delete[]creditNum;
 	creditNum = tempNum;
 	credit = temp;
 	sizeCred++;
 	return cred;
-	
+
 }
 
 double Bank::issueDeposit(double dep)
 {
-	double persents=0;
+	double persents = 0;
 	for (uint i = 0; i < sizeDep; i++)
 	{
 		if (deposit[i] == dep)
 		{
-			persents = (((dep/100)*persent) +dep);
-	        mainBall -= persents;
+			persents = (((dep / 100)*persent) + dep);
+			Bank::mainBall -= persents;
 			uint*temp = new uint[sizeDep - 1];
 			for (uint j = i; j < sizeDep; j++)
 				temp[j] = deposit[j + 1];
@@ -122,21 +123,21 @@ double Bank::issueDeposit(double dep)
 	return persents;
 }
 
-uint Bank::issueCredit(double cred,double value)
+uint Bank::issueCredit(double cred, double value)
 {
-	int rest=0;
+	int rest = 0;
 	for (uint i = 0; i < sizeCred; i++)
 	{
 		if (creditNum[i] == cred)
 		{
 			if (value < credit[i])
 			{
-				mainBall += value;
+				Bank::mainBall += value;
 				credit[i] -= value;
 			}
 			else
 			{
-				mainBall += credit[i];
+				Bank::mainBall += credit[i];
 				rest = value - credit[i];
 				credit[i] = 0;
 				uint*temp = new uint[sizeCred - 1];
@@ -153,10 +154,10 @@ uint Bank::issueCredit(double cred,double value)
 				sizeCred--;
 
 			}
-			
+
 		}
 		else
-			cout<< "not found this credit"<<endl;//сдесь очень хотел сделать "throw", но он у меня почему-то, ещё ни разу не получился (вылет программы).Поясните почему так.
+			cout << "not found this credit" << endl;//сдесь очень хотел сделать "throw", но он у меня почему-то, ещё ни разу не получился (вылет программы).Поясните почему так.
 	}
 	return rest;
 }

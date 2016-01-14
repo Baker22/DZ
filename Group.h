@@ -23,7 +23,6 @@ public:
 	char*GetGroup_name()const;
 	char*GetGroup_spec()const;
 	char*GetCourse_num()const;
-	
 	Group();
 	Group(char*group_name, char*group_spec, char*course_num);
 	Group(ushort group_size);
@@ -32,5 +31,10 @@ public:
 	void AddStudToGroup(Student & student);
 	char*GroupList();
 	char*GroupInfo();
-	void*GroupUnion();
+	void GroupUnion(Group &some);
+	void SortStud();
+	void StudMove(Group &target, ushort stud_num);
+	void StudDelete(ushort stud_num);
+	void operator=(Group&other);
+	char* operator[](ushort num);
 };

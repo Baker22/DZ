@@ -34,11 +34,16 @@ void main()
 	Group x("VPD","Programmers","1511");
 	cout << x.GetGroup_name()<<x.GetGroup_spec()<<x.GetCourse_num()<<endl;
     cout << x.GroupList();
-	cout << x.GroupUnion();
 	cout << aa.ShowDob();
 	cout << a.GetBirthday();
 	cout << a.FullName()<<endl;
 	Group y(7);
 	cout << y.GroupList();
 	cout<<a.Get1Exam(2);
+	x.GroupUnion(y);
+	cout << x.GroupList();
+	x.StudMove(y, 3);
+	cout << x.GroupList();
+	cout << y.GroupList();
+	cout<<y[2];
 }

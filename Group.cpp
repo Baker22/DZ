@@ -45,19 +45,16 @@ Group::Group(ushort group_size)
 {
 	if (!group_size)
 		return;
-	group_name = "Not yet info";
-	group_spec = "Not yet info";
-	course_num = "Not yet info";
-	Student *buf;
-	if ((this->group_size+group_size)<30)
-	{
+	SetName("No group name");
+	SetSpec("Not group spec");
+	SetNum("Not course number");
+	//this->group_size = group_size;
+	Student *temp;
 		for (int i = 0; i < group_size; i++)
 		{
-			buf = new Student("Not info", "Not info", "Not info", "Not info");
-		AddStudToGroup(*buf);
-		}
-		
-	}		
+			temp = new Student("Not phone", "Not name", "Not secondname", "Not lastname");
+		AddStudToGroup(*temp);
+		}		
 }
 
 char*Group::Getter(char*str)const
@@ -105,6 +102,7 @@ Group::Group(Group & other)
 
 char*Group::GroupList()
 {
+	SortStud();
 	ushort capasity = 250;
 	char*temp = new char[capasity];
 	strcpy_s(temp, strlen(GroupInfo()) + 1, GroupInfo());
@@ -128,7 +126,7 @@ char*Group::GroupList()
 
 char*Group::GroupInfo()
 {
-char*temp = new char[250];
+    char*temp = new char[250];
 	strcpy_s(temp, strlen(GetGroup_spec()) + 1, GetGroup_spec());
 	strcat_s(temp, 250, ",");
 	strcat_s(temp, 250, GetGroup_name());
@@ -140,7 +138,70 @@ char*temp = new char[250];
 		return res;
 }
 
-void*Group::GroupUnion()
+void Group::GroupUnion(Group &some)
 {
-	
+	if (!some.group_size)
+		return;
+	if (this->group_size + some.group_size > 30)
+		return;
+	for (int i = 0; i < some.group_size; i++)
+		AddStudToGroup(*some.students[i]);
+}
+
+void Group::SortStud()
+{
+	if (group_size < 2)
+		return;
+	char * name1 = new char[255];
+	char * name2 = new char[255];
+	for (int i = 0; i < group_size-1; i++)
+	{
+		name1 = students[i]->GetLastname();
+		name2 = students[i + 1]->GetLastname();
+		if (_stricmp(name1,name2) < 0)
+	  {
+			Student*temp = students[i];
+			students[i] = students[i + 1];
+			students[i + 1] = temp;		
+	  }
+	}
+}
+
+void Group::StudDelete(ushort stud_num)
+{
+	if (group_size < stud_num)
+		return;
+	Student**temp=new Student*[group_size-1];
+	for (int i= 0; i<stud_num-1 ; i++)
+	{
+		temp[i] = students[i];
+	}
+	for (int j = stud_num-1; j < group_size; j++)
+		temp[j] = students[j + 1];
+	group_size--;
+	delete[]students;
+	students = temp;
+
+}
+void Group::StudMove(Group &target,ushort stud_num)
+{
+	if (this->group_size < stud_num)
+		return;
+	target.AddStudToGroup (*this->students[stud_num - 1]);
+	StudDelete(stud_num);
+}
+
+void Group::operator=(Group&other)
+{
+	SetName(other.group_name);
+	SetSpec(other.group_spec);
+	SetNum(other.course_num);
+	this->group_size = other.group_size;
+	for (int i = 0; i < other.group_size; i++)
+		AddStudToGroup(*other.students[i]);
+}
+
+char*Group:: operator[](ushort num)
+{
+	return (*students[num - 1]).FullName();
 }

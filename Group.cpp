@@ -16,6 +16,19 @@ Group::Group(char*group_name, char*group_spec, char*course_num)
 }
 
 
+Group::~Group()
+{
+	if (*group_name)
+		delete[]students;
+	students = nullptr;
+	if (*group_spec)
+		delete[]students;
+	students = nullptr;
+	if (*course_num)
+		delete[]students;
+	students = nullptr;
+	
+};
 void Group::SetName(char*group_name)
 {
 	if (this->group_name)

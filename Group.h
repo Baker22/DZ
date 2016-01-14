@@ -27,7 +27,7 @@ public:
 	Group(char*group_name, char*group_spec, char*course_num);
 	Group(ushort group_size);
 	Group(Group & other);
-	~Group(){};
+	~Group();
 	void AddStudToGroup(Student & student);
 	char*GroupList();
 	char*GroupInfo();

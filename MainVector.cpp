@@ -7,7 +7,11 @@ void main()
 	srand(time(0));
 	Vector a;
 	a.FillArr();
-	cout << a<<endl;
+	auto temp = a.ShowVect();
+	cout << temp<<endl;
+	a.Resize();
+	cout << a;
+	//a.ClearArr();
 	a.RemoveValue();
 	cout << a.ShowVect()<<endl;
 	//a.ClearArr();
@@ -35,7 +39,7 @@ void main()
 	cout<<b.operator[](4)<<"show element by index 4"<<endl;
 	a.operator+(b);
 	cout << a<<"summ of arrays"<<endl;
-	a.SetCapacity(6);
+	//a.SetCapacity(6);
 	cout << a<<"capacity=6"<<endl;
     cin >> a;
 	cout << a<<"overload \">>\" done!!!!!!!\n";

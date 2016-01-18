@@ -15,8 +15,8 @@ public:
 	Vector(uint capasity);
 	Vector(Vector & other);
 	~Vector();
-	uint GetCount(){ return count; }
-	uint GetCapacity(){ return capacity; }
+	uint GetCount()const{ return count; }
+	uint GetCapacity()const{ return capacity; }
 	void SetCapacity(uint capacity);
 	void Resize();
 	char*ShowVect();

@@ -46,4 +46,5 @@ void main()
 	cout << x.GroupList();
 	cout << y.GroupList();
 	cout<<y[2];
+	//Group t = x;
 }

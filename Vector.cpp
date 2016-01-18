@@ -1,6 +1,7 @@
 #include"Vector.h"
 
 Vector::Vector()
+
 {
 	count = 0;
 	 capacity= 10;
@@ -39,14 +40,20 @@ void Vector::SetCapacity(uint capacity)
 {
 	if (this->capacity == capacity)
 		return;
-	int arr_size;
-	arr_size = (this->count < capacity) ? this->count : capacity;
 	int*temp = new int[capacity];
+	int arr_size= (this->count < capacity) ? this->count : capacity;;
 	for (uint i = 0; i < arr_size; i++)
-	temp[i] = arr[i];
-	this->ClearArr();
-	arr = temp;
+		temp[i] = arr[i];
+	delete[]this->arr;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	this->arr = nullptr;
+	this->arr = temp;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	//delete[]temp;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
 	count = arr_size;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 }
 
 
@@ -54,8 +61,8 @@ void Vector::FillArr()
 {
 	for (int i = 0; i < capacity; i++)
 	{
-	arr[i] = i + 1;
-	count++;
+	this->arr[i] = (i + 1);
+	this->count++;
 	}
 		
 }
@@ -64,9 +71,17 @@ void Vector::Resize()
 	int*temp = new int[capacity + 10];
 	for (uint i = 0; i < count; i++)
 		temp[i] = arr[i];
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	delete[]arr;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	arr = temp;
+	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
+	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	capacity += 10;
+	//delete[]temp;
+	
 }
 char*Vector::ShowVect()
 {
@@ -84,6 +99,7 @@ char*Vector::ShowVect()
 		strcat_s(res, 250, temp);
 		strcat_s(res, 250, "; ");
 	}
+	delete[]temp;
 	return res;
 }
 void Vector::AddValue(int value)
@@ -102,7 +118,10 @@ void Vector::RemoveValue()
 }
 void Vector::ClearArr()
 {
-	for (; count > 0; count--, arr[count] = 0){}
+	//for (; count > 0; count--, arr[count] = 0){}
+	cout << arr[0]<<arr[1]<<arr[2]<<arr[3]<<arr[4];
+	delete[]arr;
+	arr = nullptr;
 }
 int Vector::IndexOf(int value)
 {
@@ -205,7 +224,7 @@ void Vector::operator()(uint capacity)
 	int*temp = new int[capacity];
 	for (uint i = 0; i < arr_size; i++)
 		temp[i] = arr[i];
-	this->ClearArr();
+	delete[]arr;
 	arr = temp;
 	count = arr_size;
 }

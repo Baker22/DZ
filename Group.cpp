@@ -67,7 +67,8 @@ Group::Group(ushort group_size)
 		{
 			temp = new Student("Not phone", "Not name", "Not secondname", "Not lastname");
 		AddStudToGroup(*temp);
-		}		
+		}	
+		delete[]temp;
 }
 
 char*Group::Getter(char*str)const
@@ -107,10 +108,13 @@ void Group::AddStudToGroup(Student & student)
 
 Group::Group(Group & other)
 {
+	group_name = nullptr;
+	group_spec = nullptr;
+	course_num = nullptr;
 	Group(other.group_name, other.group_spec, other.course_num);
-	other.group_size = this->group_size;
+	this->group_size =other.group_size ;
 	for (int i = 0; i < other.group_size; i++)
-		other.students[i] = this->students[i];
+		this->students[i] =other.students[i] ;
 }
 
 char*Group::GroupList()

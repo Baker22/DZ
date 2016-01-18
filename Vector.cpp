@@ -28,7 +28,7 @@ Vector::Vector(Vector & other)
 Vector::~Vector()
 {
 	ClearArr();
-	arr = nullptr;
+	cout << "DEST DONE\n";
 }
 
 void Vector::SetCount(uint count)
@@ -45,15 +45,9 @@ void Vector::SetCapacity(uint capacity)
 	for (uint i = 0; i < arr_size; i++)
 		temp[i] = arr[i];
 	delete[]this->arr;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
 	this->arr = nullptr;
 	this->arr = temp;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	delete[]temp;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
 	count = arr_size;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 }
 
 
@@ -71,17 +65,9 @@ void Vector::Resize()
 	int*temp = new int[capacity + 10];
 	for (uint i = 0; i < count; i++)
 		temp[i] = arr[i];
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	delete[]arr;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	arr = temp;
-	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	capacity += 10;
-	delete[]temp;
-	
 }
 char*Vector::ShowVect()
 {
@@ -119,7 +105,7 @@ void Vector::RemoveValue()
 void Vector::ClearArr()
 {
 	//for (; count > 0; count--, arr[count] = 0){}
-	cout << arr[0]<<arr[1]<<arr[2]<<arr[3]<<arr[4];
+	
 	delete[]arr;
 	arr = nullptr;
 }
@@ -219,13 +205,13 @@ void Vector::operator()(uint capacity)
 {
 	if (this->capacity == capacity)
 		return;
-	int arr_size;
-	arr_size = (this->count < capacity) ? this->count : capacity;
 	int*temp = new int[capacity];
+	int arr_size = (this->count < capacity) ? this->count : capacity;;
 	for (uint i = 0; i < arr_size; i++)
 		temp[i] = arr[i];
-	delete[]arr;
-	arr = temp;
+	delete[]this->arr;
+	this->arr = nullptr;
+	this->arr = temp;
 	count = arr_size;
 }
 
@@ -252,5 +238,4 @@ istream& operator>>(istream& is, Vector& arr)
 	is >> capacity;
 	arr.SetCapacity(capacity);
 		return is;
-		//SetCapacity()
 }

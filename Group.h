@@ -13,18 +13,19 @@ class Group
 	char*group_spec;
 	char*course_num;
 	char*Getter(char*str)const;
-public:
 	void SetSize(ushort group_size);
-	void SetName(char* group_name);
-	void SetSpec(char*group_spec);
-	void SetNum(char*course_num);
+public:
+	
+	void SetName(const char* group_name);
+	void SetSpec(const char*group_spec);
+	void SetNum(const char*course_num);
 
 	ushort GetSize() const{ return this->group_size; }
 	char*GetGroup_name()const;
 	char*GetGroup_spec()const;
 	char*GetCourse_num()const;
 	Group();
-	Group(char*group_name, char*group_spec, char*course_num);
+	Group(const char*group_name, const char*group_spec, const char*course_num);
 	Group(ushort group_size);
 	Group(Group & other);
 	~Group();
@@ -35,6 +36,6 @@ public:
 	void SortStud();
 	void StudMove(Group &target, ushort stud_num);
 	void StudDelete(ushort stud_num);
-	void operator=(Group&other);
+	Group& operator=(Group&other);
 	char* operator[](ushort num);
 };

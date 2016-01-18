@@ -46,5 +46,18 @@ void main()
 	cout << x.GroupList();
 	cout << y.GroupList();
 	cout<<y[2];
-	//Group t = x;
+	x.AddStudToGroup(a);
+	x.AddStudToGroup(a);
+	x.AddStudToGroup(a);
+	x.AddStudToGroup(a);
+	cout << x.GroupList();
+	cout<<"------------------/n";
+	Group g = x;
+	Group n = x;
+	Group m = x;
+	cout << x.GroupList();
+	cout << y.GroupList();
+	cout << g.GroupList();
+
+
 }

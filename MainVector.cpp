@@ -9,10 +9,11 @@ void main()
 	a.FillArr();
 	auto temp = a.ShowVect();
 	cout << temp<<endl;
-	a.Resize();
+	a.SetCapacity(5);
 	cout << a;
+	cout << "--------------------------------\n";
 	//a.ClearArr();
-	a.RemoveValue();
+	/*a.RemoveValue();
 	cout << a.ShowVect()<<endl;
 	//a.ClearArr();
 	cout<<a.IndexOf(30)<<endl;
@@ -42,5 +43,5 @@ void main()
 	//a.SetCapacity(6);
 	cout << a<<"capacity=6"<<endl;
     cin >> a;
-	cout << a<<"overload \">>\" done!!!!!!!\n";
+	cout << a<<"overload \">>\" done!!!!!!!\n";*/
 }

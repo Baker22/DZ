@@ -49,7 +49,7 @@ void Vector::SetCapacity(uint capacity)
 	this->arr = nullptr;
 	this->arr = temp;
 	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
-	//delete[]temp;
+	delete[]temp;
 	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
 	count = arr_size;
 	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
@@ -80,7 +80,7 @@ void Vector::Resize()
 	cout << arr[0] << arr[1] << arr[2] << arr[3] << arr[4];
 	cout << temp[0] << temp[1] << temp[2] << temp[3] << temp[4];
 	capacity += 10;
-	//delete[]temp;
+	delete[]temp;
 	
 }
 char*Vector::ShowVect()

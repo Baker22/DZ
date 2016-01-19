@@ -13,7 +13,7 @@ class Vector
 public:
 	Vector();
 	Vector(uint capasity);
-	Vector(Vector & other);
+	Vector(const Vector & other);
 	~Vector();
 	uint GetCount()const{ return count; }
 	uint GetCapacity()const{ return capacity; }
@@ -35,10 +35,8 @@ public:
 	bool operator==(Vector &other);// (сравнение двух массивов)
 	void operator()(uint capacity); //(изменение capacity - альтернатива Resize).
 	int operator[](uint index);// (доступ к элементу массива по указанному индексу, с проверкой на выход за пределы массива).
-	void operator+(Vector &other);// (слияние двух массивов)
+	Vector operator+(const Vector &other);// (слияние двух массивов)
 	friend ostream& operator<<(ostream& os, Vector& arr);//вывод на экран
 	friend istream& operator>>(istream& is, Vector& arr);//(ввод с клавиатуры)
-	
 
-	
 };

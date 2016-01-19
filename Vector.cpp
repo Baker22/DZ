@@ -4,8 +4,8 @@ Vector::Vector()
 
 {
 	count = 0;
-	 capacity= 10;
-	arr=new int[capacity];
+	capacity = 10;
+	arr = new int[capacity];
 }
 
 Vector::Vector(uint capacity)
@@ -15,18 +15,19 @@ Vector::Vector(uint capacity)
 	arr = new int[capacity];
 }
 
-Vector::Vector(Vector & other)
+Vector::Vector(const Vector & other)
 {
-	SetCount(other.count);
-	this->capacity=other.capacity;
+	this->count = other.GetCount();
+	this->capacity = other.GetCapacity();
 	arr = new int[capacity];
 	for (uint i = 0; i < other.count; i++)
-		this->arr[i] = other.arr[i];
+		arr[i] = other.arr[i];
 }
 
 
 Vector::~Vector()
 {
+
 	ClearArr();
 	cout << "DEST DONE\n";
 }
@@ -41,11 +42,10 @@ void Vector::SetCapacity(uint capacity)
 	if (this->capacity == capacity)
 		return;
 	int*temp = new int[capacity];
-	int arr_size= (this->count < capacity) ? this->count : capacity;;
-	for (uint i = 0; i < arr_size; i++)
+	int arr_size = (this->count < capacity) ? this->count : capacity;
+	for (int i = 0; i < arr_size; i++)
 		temp[i] = arr[i];
 	delete[]this->arr;
-	this->arr = nullptr;
 	this->arr = temp;
 	count = arr_size;
 }
@@ -53,12 +53,12 @@ void Vector::SetCapacity(uint capacity)
 
 void Vector::FillArr()
 {
-	for (int i = 0; i < capacity; i++)
+	for (uint i = 0; i < capacity; i++)
 	{
-	this->arr[i] = (i + 1);
-	this->count++;
+		this->arr[i] = (i + 1);
+		this->count++;
 	}
-		
+
 }
 void Vector::Resize()
 {
@@ -67,7 +67,7 @@ void Vector::Resize()
 		temp[i] = arr[i];
 	delete[]arr;
 	arr = temp;
-	capacity += 10;
+
 }
 char*Vector::ShowVect()
 {
@@ -90,8 +90,8 @@ char*Vector::ShowVect()
 }
 void Vector::AddValue(int value)
 {
-	if (capacity==count)
-		Resize();	
+	if (capacity == count)
+		Resize();
 	arr[count] = value;
 	count++;
 }
@@ -99,37 +99,36 @@ void Vector::RemoveValue()
 {
 	if (!count)
 		return;
-	arr[count-1] = 0;
+	arr[count - 1] = 0;
 	count--;
 }
 void Vector::ClearArr()
 {
-	//for (; count > 0; count--, arr[count] = 0){}
-	
 	delete[]arr;
 	arr = nullptr;
+	count = 0;
 }
 int Vector::IndexOf(int value)
 {
 	for (uint i = 0; i < count; i++)
 	{
 		if (arr[i] == value)
-		return i;
+			return i;
 	}
-	 return -1;
+	return -1;
 }
 int Vector::LastIndexOf(int value)
 {
-	for (uint i = count-1; i >0; i--)
+	for (uint i = count - 1; i >0; i--)
 	{
 		if (arr[i] == value)
-		return i;
+			return i;
 	}
-	 return -1;
+	return -1;
 }
 void Vector::Insert(uint index, int value)
 {
-	if (index > capacity-1)
+	if (index > capacity - 1)
 		Resize();
 	if (index > count - 1)
 	{
@@ -138,23 +137,26 @@ void Vector::Insert(uint index, int value)
 		count++;
 	}
 	else
-	arr[index] = value;
+		arr[index] = value;
 }
 
 void Vector::InsertPlus(uint index, int value)
 {
-	if (index > capacity-1)
+	if (index > capacity - 1 && count >= capacity - 1)
 		Resize();
-	if (index > count - 1)
+	if (index > count)
 	{
 		index = count;
-		arr[index] = value;
+		arr[count] = value;
 	}
 	else
 	{
-		for (int i = count - 1; i > index; i--)
-		arr[i + 1] = arr[i];
-	arr[index] = value;
+		for (uint i = count; i > index; i--)
+		{
+			int temp = arr[i];
+			arr[i + 1] = temp;
+		}
+		arr[index] = value;
 	}
 	count++;
 }
@@ -162,8 +164,8 @@ void Vector::RemoveAt(uint index)
 {
 	if (index > count - 1)
 		return;
-	for (uint i = index; i < count; i++)
-		arr[i] = arr[i+1];
+	for (uint i = index; i < count - 1; i++)
+		arr[i] = arr[i + 1];
 	arr[count - 1] = 0;
 	count--;
 }
@@ -171,22 +173,23 @@ void Vector::Reverse()
 {
 	if (count < 2)
 		return;
-	for (uint i = 0,j = count - 1; i < (count / 2 ); i++, j--)
+	for (uint i = 0, j = count - 1; i < (count / 2); i++, j--)
 		swap(arr[i], arr[j]);
 }
 void Vector::Sort()
 {
 	if (count < 2)
 		return;
-	for (uint i = 1; i < count;i++)
+	for (uint i = 1; i < count; i++)
 	for (uint j = i; j>0 && arr[j] < arr[j - 1]; j--)
 		swap(arr[j], arr[j - 1]);
 }
 void Vector::Shuffle()
 {
-	for (int i = 0; i < count; i++)
+	for (uint i = 0; i < count; i++)
 	{
 		int index = rand() % count;
+		if (i == index)continue;
 		swap(arr[i], arr[index]);
 	}
 }
@@ -206,30 +209,38 @@ void Vector::operator()(uint capacity)
 	if (this->capacity == capacity)
 		return;
 	int*temp = new int[capacity];
-	int arr_size = (this->count < capacity) ? this->count : capacity;;
-	for (uint i = 0; i < arr_size; i++)
+	int arr_size = (this->count < capacity) ? this->count : capacity;
+	for (int i = 0; i < arr_size; i++)
 		temp[i] = arr[i];
 	delete[]this->arr;
-	this->arr = nullptr;
 	this->arr = temp;
 	count = arr_size;
 }
 
 int Vector::operator[](uint index)
 {
+
 	if (index>count - 1)
 		return -1;
 	return arr[index];
 }
-void Vector::operator+(Vector &other)
+
+Vector Vector::operator+(const Vector &other)
 {
+	int*temp_arr = new int[this->capacity + other.capacity];
+	for (uint i = 0; i < this->count; i++)
+		temp_arr[i] = this->arr[i];
 	for (uint i = 0; i < other.count; i++)
-		this->AddValue(other.arr[i]);
+		temp_arr[this->count + i] = other.arr[i];
+	delete[]this->arr;
+	arr = temp_arr;
+	return *this;
+
 }
 
 ostream& operator<<(ostream& os, Vector& arr)
 {
-	os<< arr.ShowVect() ;
+	os << arr.ShowVect();
 	return os;
 }
 istream& operator>>(istream& is, Vector& arr)
@@ -237,5 +248,5 @@ istream& operator>>(istream& is, Vector& arr)
 	int capacity;
 	is >> capacity;
 	arr.SetCapacity(capacity);
-		return is;
+	return is;
 }

@@ -80,7 +80,7 @@ void main()
 	char*temp =b;
 	cout << temp<<endl;
 	
-
+	delete[]temp;
 	String _int("345");
 	int temp_1 = _int;
 	cout << temp_1<<endl;
@@ -120,10 +120,10 @@ void main()
 	cout << a.IndexOf('f') << endl;
 	cout << a.LastIndexOf('F') << endl;
 	c.SetCapacity(23);
-	
-	cout<<a.IndexOf("Wo")<<endl;
-	String one("Potato");
-	String two("TAmata");
+	String hello("Hellllllo");
+	cout << hello.IndexOf("lo") << endl;
+	String one("ohPotato");
+	String two("Potato");
 	one.Resize(30);
 	cout << one.LastIndexOf(&two) << endl;
 	cout<<one.IndexOfAny(&two) << endl;
@@ -134,11 +134,13 @@ void main()
 	text.PrintLn();
 	text.PadLeft(5);
 	text.PrintLn();
+	
 	text.PadRight(1);
+	text.SetCapacity(23);
 	text.PrintLn();
 	text.SetCapacity(23);
 	text.PrintLn();
-	text.PadLeft(1, '(');
+	text.PadLeft(5,'(');
 	text.PrintLn();
 	text.SetCapacity(28);
 	text.PadRight(3, '!');
@@ -188,4 +190,19 @@ void main()
 	rand.PrintLn();
 	rand.Insert(&simbs, 3);
 	rand.PrintLn();
+	simbs.PrintLn();
+	simbs.Initialize(9, 9, "abcdxyzzz");
+	simbs.PrintLn();
+	
+	String a_a("three");
+	String b_b("!two!!two!");
+	String *c_c = ( "two"+ a_a);
+	c_c->PrintLn();
+	cout<<a_a.operator!= (b_b)<<endl;
+	cout << c_c->CompareTo("twoonee") << endl;
+	c_c->LastIndexOf('a');
+	String bas("threetwoone");
+	//bas.Replace(a_a, b_b);
+	bas.PrintLn();
+	cout<<bas.IndexOf("one")<<endl;
 }

@@ -13,9 +13,9 @@ public:
 	String();//конструктор по умолчанию, который создаёт пустую строку (но capacity= 80)
 	explicit String(uint capacity);//explicit-конструктор с 1 параметром типа int (задаёт capacity, с проверкой что вместительность больше 10)
 	void SetCapacity(uint capacity);
-	String(char *str);// (формирует строку наоснове переданного указателя на массив char[], с проверкой - не пустой ли указатель!)
+	String(const char *str);// (формирует строку наоснове переданного указателя на массив char[], с проверкой - не пустой ли указатель!)
 	String(const String & origin);//конструктор копирования)
-	String(char *str, int capacity);//конструктор с 2 параметрами- char* и int (указатель на строку, вместительность)
+	String(char *str, uint capacity);//конструктор с 2 параметрами- char* и int (указатель на строку, вместительность)
     String(String& arr, int capacity);//конструктор с 2 параметрами - String и int (указатель на строку, вместительность)
 	~String();
 	void Initialize(uint count, uint capacity, char*str);

@@ -9,14 +9,14 @@ String::String()
 	*str_arr = '\0';
 }
 
-String::String (uint capacity)
+String::String(uint capacity) 
 {
 	count = 0;
 	SetCapacity(capacity);
 	str_arr = new char[this->capacity];
 }
 
-String::String(char *str)
+String::String(const char *str)
 {
 	if (!str) return;
 	capacity = strlen(str)+80;
@@ -25,7 +25,7 @@ String::String(char *str)
 	count = strlen(str_arr)+1;
 }
 
-String::String(char *str, int capacity)
+String::String(char *str, uint capacity)
 {
 	if (!str) return;
 	if (capacity<strlen(str)+1)
@@ -49,13 +49,13 @@ String::String(const String & origin)
 String::String(String& arr, int capacity)
 {
 	this->capacity = capacity;
-	if (capacity < arr.GetCount()) return;
-	char*temp = new char[capacity];
+	if (capacity < arr.GetCount()) 
+		Resize((capacity+arr.GetCount())*2);
+	char*temp = new char[this->GetCapacity()];
 	strcpy_s(temp, strlen(arr.GetChar()) + 1, arr.GetChar());
 	delete[]str_arr;
 	str_arr = temp;
-	this->capacity = capacity;
-	this->count = strlen(this->str_arr);
+	this->count = strlen(this->str_arr)+1;
 }
 
 String::~String()
@@ -69,7 +69,7 @@ void String::Initialize(uint count, uint capacity, char*str)
 {
 	this->capacity = capacity;
 	if (capacity < count || capacity<10)
-	this->capacity = capacity + count * 2;
+	Resize((capacity + count) * 2);
 	if (!str)
 	{
 		this->count = count;
@@ -80,7 +80,7 @@ void String::Initialize(uint count, uint capacity, char*str)
 	strcpy_s(temp, strlen(str) + 1, str);
 	delete[]str_arr;
 	str_arr = temp;
-	this->count = strlen(str) + 1;
+	this->count = strlen(this->str_arr) + 1;
 	}
 }
 
@@ -94,28 +94,32 @@ void String::Clear()
 
 void String::SetCapacity(uint capacity)
 {
-	this->capacity = capacity;
-	if (capacity < 10)
-	this->capacity = 10;
-	char*temp = new char[this->capacity];
-	if (this->GetCount())
+	this->capacity = (capacity>10)?capacity:10;
+	char*temp = new char[this->GetCapacity()];
+	if (this->count)
 	{
-	uint size = (this->capacity < count) ? this->capacity : count;
+    uint size = (this->capacity < count) ? this->capacity : count;
 	for (uint i = 0; i < size; i++)
 	temp[i] = str_arr[i];
-	temp[size] = '\0';
-	this->count = strlen(this->GetChar())+1;
-	}
 	delete[]str_arr;
 	str_arr = temp;
+	this->count = strlen(this->GetChar())+1;
+	}
+	else
+	{
+	delete[]str_arr;
+	str_arr = temp;
+	*str_arr = '\0';
+	this->count = 1;
+	}
 }
 
 void String::AddSim(char sim)
 {
 	if (count == capacity) Resize(capacity+80);
-	str_arr[GetCount()-1] = { sim };
-	count++;
-	str_arr[GetCount()-1] = { '\0' };
+	str_arr[this->count-1] = { sim };
+	this->count++;
+	str_arr[this->count-1] = { '\0' };
 }
 
 void String::Resize(uint qty)
@@ -165,26 +169,21 @@ void String::Print()const
 
 int String::Compare(const String& one,const String& two)
 {
-	if (one.GetCount() != two.GetCount()) return -1;
+	if (one.GetCount() > two.GetCount()) return -1;
+	if (one.GetCount() < two.GetCount()) return 1;
 	uint size = one.GetCount();
 	for (uint i = 0; i < size; i++)
 	{
-		if (one.GetSim(i) == two.GetSim(i)) continue;
-		else return -1;		
+		if ((int)one.GetSim(i) > (int)two.GetSim(i)) return -1;
+		if ((int)one.GetSim(i) < (int)two.GetSim(i)) return 1;	
 	}
 	return 0;
 }
 
 int String::Compare(const String& one, const char* two)
 {
-	if (strlen(one.GetChar()) != strlen(two)) return -1;
-	uint size = strlen(two);
-	for (uint i = 0; i < size; i++)
-	{
-		if (one.GetSim(i) == two[i]) continue;
-	else return -1;
-	}
-	return 0;
+	String str(two);
+	return Compare(one,str);
 }
 
 String*operator+(const String & one, const String & two)
@@ -200,39 +199,28 @@ String*operator+(const String & one, const String & two)
 
  String* operator+ (const String & origin,const char* str)
 {
-	 
-	 if (sizeof(origin) == 0 && sizeof(str) == 0) return 0;
-	 char*st = new char[strlen(origin.GetChar()) +strlen(str)+1];
-	 strcpy_s(st, strlen(str)+1, str);
-	 strcat_s(st, strlen(origin.GetChar()) + strlen(str) + 1,origin.GetChar());
-	 String* temp = new String (st);
-	 return temp;		 
+	 String st(str);
+	 return origin + st; 
 }
 
  String* operator+(const char*str, const String & origin)
  {
-	 if (sizeof(origin) == 0 && sizeof(str) == 0) return 0;
-	 char*st = new char[strlen(origin.GetChar()) +strlen(str)+1];
-	 strcpy_s(st, strlen(origin.GetChar())+1,origin.GetChar());
-	 strcat_s(st,strlen(str) + strlen(origin.GetChar()) + 1,str);
-	 String* temp = new String (st);
-	 return temp;		 
+	 String st(str);
+	 return st+origin; 
  }
 
  String* operator+(const String & origin, const char sim)
  {
-	 char str[] = { sim, '\0' };
-	 String*temp = new String;
-	 temp = operator+(str,origin );
-	 return temp;
+	 char*str = ( sim, '\0' );
+	 String st(str);
+	 return origin + st;
  }
 
  String* operator+(const char sim, const String & origin)
  {
-	 char str[] = { sim, '\0' };
-	 String*temp = new String;
-	 temp = operator+(origin,str );
-	 return temp;
+	 char*str = ( sim, '\0' );
+	 String st(str);
+	 return st+origin;
  }
 
  String& String::operator=(const String & other)
@@ -269,9 +257,7 @@ String*operator+(const String & one, const String & two)
 
  bool String::operator<(const String & other)
  {
-	 if (this->GetCount() < other.GetCount()) 
-	 return true;
-	 return false;
+	 return !(*this>other);
  }
 
  bool String::operator>=(const String & other)
@@ -282,22 +268,13 @@ String*operator+(const String & one, const String & two)
  }
 
  bool String::operator<=(const String & other)
- {
-	 if (this->GetCount() <= other.GetCount()) 
-	 return true;
-	 return false;
+ {  
+	 return !(*this>=other); 
  }
 
  bool String::operator!=(const String & other)
  {
-	 if (this->GetCount() != other.GetCount()) return true;
-	 uint size = this->GetCount();
-	 for (uint i = 0; i < size; i++)
-	 {
-		 if (this->GetSim(i) == other.GetSim(i)) continue;
-		 else return true;
-	 }
-	 return false;
+	 return  !(*this == other);
  }
 
  void String::operator()(char*str, uint capacity, uint count)
@@ -314,10 +291,10 @@ String*operator+(const String & one, const String & two)
  {
 	 if (other.GetCount())
 	 {
-		 if (this->GetCount() + other.GetCount() > this->capacity)
+		 if (this->count + other.count > this->capacity)
 		 Resize((this->count + other.GetCount()) * 2);
-		 strcat_s(this->str_arr, this->GetCapacity(), other.GetChar());
-		 this->count = strlen(this->GetChar())+1;
+		 strcat_s(this->str_arr, this->capacity, other.str_arr);
+		 this->count = strlen(this->str_arr)+1;
 	 }
 	 return *this;
  }
@@ -326,10 +303,8 @@ String*operator+(const String & one, const String & two)
  {
 	 if (str)
 	 {
-		 if (this->count + strlen(str) > this->capacity)
-		 Resize((this->count + strlen(str)) * 2);
-		 strcat_s(this->str_arr, this->capacity, str);
-		 this->count = strlen(this->str_arr);
+		 String temp(str);
+		 *this += temp;
 	 }
 	 return *this;
  }
@@ -534,7 +509,7 @@ String*operator+(const String & one, const String & two)
  {
 	 if (GetCount())
 	 {
-		 for (int i =GetCount();i>=0; i--)
+		 for (int i =this->count-2;i>=0; i--)
 		 {
 			 if (str_arr[i] == sim)
 		 return i;
@@ -549,63 +524,62 @@ String*operator+(const String & one, const String & two)
 	 if (GetCount()&&str)
 	 {
 		 int index;
-		 int count = 0;
-		 for (uint i = 0; i < GetCount()-strlen(str);i++)
+		 int counter = 0;
+		 uint j = 0;
+		 int size_check(this->count-strlen(str));
+		 for (uint i = 0; i <this->count;i++)
 		 {
-			 if (str_arr[i] == str[0])
+			 if (str_arr[i] == str[j])
 			 {
-				 for (uint j = 0; j < strlen(str); j++,i++)
+				 j++;
+				 counter++;
+				 if (counter == strlen(str))
+				 {
+					 index = i - (strlen(str)-1);
+					 return index; 
+				 }	 
+			 }
+			 else
 			 {
-				 if (str_arr[i] == str[j])
-			 {
-				 count++;
-			 index = (i-count)+1;
+				 if (counter)
+					 i--;
+				 j = 0;
+				 counter = 0;	 
 			 }
-			 if (count == strlen(str))
-				 return index;
-			 }
-			 }
-			 
-			 
-		 }
+			 if (i>size_check&&counter==0)
+				 return -1;
+		  }
 	 }
 	 return -1;
  }
 
  int String::LastIndexOf(String*str)
  {
-	 if (GetCount() && str)
+	 if (this->count>0 && str->count>0&&str->count<=this->count)
 	 {
 		 int index;
 		 int counter = 0;
 		 int i =this-> GetCount()-2;
-		 int k = str->GetCount() - 2;
-		 for (; i > str->GetCount()-1;i--)
-		 if (this->str_arr[i] == str->str_arr[k])
+		 int k = str->count - 1;
+		 for (; i>=k; k--,i--)
+		 {
+			 if (this->str_arr[i] == str->str_arr[k])
 			 {
-				 for (int j =str->GetCount()-2; j >=0,i>0; i--)
-				 {
-					 if (str_arr[i] == str->str_arr[j])
-					 {
-						 counter++;
-						 index =i;
-						 j--;
-					 }
-					 else
-					 {
-						 if (counter)
-					     j =str->GetCount()-2;
-						 counter = 0;
-					 }
-						 
-					 if (counter == str->GetCount()-1)
-						 return index;
-				 }
-			 }
+				counter++;
+				index =i;
+				if (counter == str->GetCount()-1)
+						 return index; 
+		     }
+				 else
+			  {
+				  k =str->count-1;
+				  counter = 0;
+			  }	
 		 }
-	 return -1;
+	 }
+		return -1;
  }
-
+	 
  int String::IndexOfAny(String*str)
  {
 	 int maxm = str->GetCount();
@@ -624,30 +598,15 @@ String*operator+(const String & one, const String & two)
  
  void String::Normalize()
  {
+	
 	 if (this->count > 1)
+		 this->Trim();
 	 {
 	 int counter = 0;
-	 int counter1 = 0;
-	 int pos_1=0;
-	 int pos_2 = GetCount()-2;
-	 for (int i = 0; GetSim(i) == ' '; i++,pos_1=i ,counter++);
-	 for (int j = GetCount()-2; GetSim(j) == ' '; --j,pos_2=j ,counter++);
-	 for (int a = pos_1; a < pos_2; a++)
-	 {
-		 if (GetSim(a) == ' ')
-			 counter1++;
-		 else
-		 {
-			 if (counter1>1)
-			 {
-				 counter++; 
-			 }
-			 counter1= 0;
-		 }
-	 }
+	 int pos_2 = this->count-1;
 	 char*temp = new char[this->capacity];
 	 int t = 0;
-	 for (int b = pos_1; b <= pos_2+1; b++)
+	 for (int b =0; b < pos_2; b++)
 	 {
 		 if (GetSim(b) != ' '||GetSim(b+1)!=' ')
 		 { 
@@ -661,50 +620,36 @@ String*operator+(const String & one, const String & two)
 	 str_arr = temp;
 	 this->count = strlen(str_arr)+1; 
 	 }
-	 
  }
 
  void String::PadLeft(int value)
  {
-	 if (this->GetCount() + value > this->capacity)
-		 Resize(value + this->capacity + 80);
-	 int j = GetCount() - 1;
-	 for (int i = value + this->GetCount()-1; i >=value; i--, j--)
-		 this->str_arr[i] = this->str_arr[j];
-	 for (int a = 0; a < value; a++)
-		 this->str_arr[a] =' ';
-	 this->count = strlen(this->GetChar())+1;
+	 PadLeft(value, ' ');
  }
 
  void String::PadRight(int value)
  {
-	 if (this->GetCount() + value>this->capacity)
-		 Resize(value+this->capacity+80);
-	 int i = 0;
-	 while (i < value)
-	 {
-		 i++;
-		 AddSim('#');
-	 }
+	 PadRight(value, ' ');
  }
 
  void String::PadLeft(int qty, char sim)
  {
 	 if (this->GetCount() + qty > this->GetCapacity())
 		 Resize(qty + this->GetCapacity() + 80);
-	 int j = GetCount() - 1;
-	 for (int i = qty + this->GetCount() - 1; i >= qty; i--, j--)
+	 int j = this->count - 1;
+	 for (int i = qty + this->count - 1; i >= qty; i--, j--)
 	 {
 		 this->str_arr[i] = this->str_arr[j];
 	 } 
 	 for (int a = 0; a < qty; a++)
 		 this->str_arr[a] = sim;
 	 this->count = strlen(this->GetChar())+1;
+
  }
 
  void String::PadRight(int qty, char sim)
  {
-	 if (this->GetCount() + qty>this->capacity)
+	 if (this->count + qty>this->capacity)
 		 Resize(qty + this->capacity + 80);
 	 int i = 0;
 	 while (i < qty)
@@ -716,20 +661,15 @@ String*operator+(const String & one, const String & two)
 
  void String::Remove(int index)
  {
-	 if (index < this->GetCount() - 1)
-	 {
-		 for (int i = index; i < this->GetCount(); i++)
-		 str_arr[i] = '\0';
-	 }
-	 this->count = strlen(str_arr) + 1;
+	 Remove(index, this->count - index);
  }
 
  void String::Remove(int index, int qty)
  {
-	 if (index < this->GetCount() - 1&&qty<this->GetCount()-1-index)
+	 if (index < this->count - 1&&qty<this->count-1-index)
 	 {
 		 int j = qty+index;
-		 for (int i = index; j < this->GetCount(); i++,j++)
+		 for (int i = index; j < this->count; i++,j++)
 		 str_arr[i] =str_arr[j] ;
 	 }
 	 this->count = strlen(str_arr) + 1;
@@ -737,8 +677,8 @@ String*operator+(const String & one, const String & two)
 
  void String::Replace(char target, char value)
  {
-	 if (this->GetCount())
-	 for (int i = 0; i < GetCount() - 1; i++)
+	 if (this->count)
+	 for (int i = 0; i <this->count - 1; i++)
 	 {
 		 if (GetSim(i) == target)
 			 str_arr[i] = value;
@@ -747,23 +687,29 @@ String*operator+(const String & one, const String & two)
 
  void String::Replace(String& substr, String& rep)
  {
-	 if (this->GetCount())
+	 if (this->count)
 	 {
-		 if (this->GetCount() + strlen(rep) > this->GetCapacity())
+		 if (this->count + strlen(rep) > this->capacity)
 			 Resize(this->GetCapacity() + strlen(rep) + 80);
 		 int index = LastIndexOf(&substr);
-		 if (index > 0)
+		 if (index >= 0)
 		 {
 			 char*temp = new char[this->GetCapacity()];
-			 uint i = 0;
+			 uint i= 0;
+			 uint k= index+strlen(substr);
 			 for (; i < index; i++)
 				 temp[i] = str_arr[i];
-			 for (uint j = 0; j < strlen(rep); j++,i++)
+
+			 for (uint j = 0; j < strlen(rep); i++,j++)
 				 temp[i] = rep[j];
-			 for (uint k = index + strlen(rep); k < this->GetCount(); k++,i++)
+
+			 for (; str_arr[k] !='\0'; i++,k++)
 				 temp[i] = str_arr[k];
-			 strcpy_s(str_arr, strlen(temp) + 1, temp);
-			 this->count = strlen(this->GetChar()) + 1;
+
+			 temp[i] ='\0';
+			 delete[]str_arr;
+			 str_arr = temp;
+			 this->count = strlen(this->str_arr) + 1;
 		 }
 	 }
  }
@@ -818,47 +764,24 @@ String*operator+(const String & one, const String & two)
 
  void String::Trim()
  {
-	 if (this->count > 1)
-	 {
-		 int counter = 0;
-		 int counter1 = 0;
-		 int pos_1 = 0;
-		 int pos_2 = GetCount() - 2;
-		 for (int i = 0; GetSim(i) == ' '; i++, pos_1 = i, counter++);
-		 for (int j = GetCount() - 2; GetSim(j) == ' '; --j, pos_2 = j, counter++);
-		 char*temp = new char[this->capacity];
-		 int t = 0;
-		 for (int b = pos_1; b <= pos_2 + 1; b++)
-		 {
-				 temp[t] = GetSim(b);
-				 t++;
-		 }
-		 if (temp[t] != '\0')
-			 temp[t] = '\0';
-		 delete[]str_arr;
-		 str_arr = temp;
-		 this->count = strlen(str_arr) + 1;
-	 }
+	 TrimStart();
+	 TrimEnd();
  }
 
  void String::TrimEnd()
  {
 	 if (this->count > 1)
 	 {
-		 int counter = 0;
-		 int counter1 = 0;
-		 int pos_1 = 0;
 		 int pos_2 = GetCount() - 2;
-		 for (int j = GetCount() - 2; GetSim(j) == ' '; --j, pos_2 = j, counter++);
+		 for (int j = GetCount() - 2; GetSim(j) == ' '; --j, pos_2 = j);
 		 char*temp = new char[this->capacity];
-		 int t = 0;
-		 for (int b = pos_1; b <= pos_2 + 1; b++)
+		 int b = 0;
+		 for (; b < pos_2 + 1; b++)
 		 {
-				 temp[t] = GetSim(b);
-				 t++;
+				 temp[b] = str_arr[b];
 		 }
-		 if (temp[t] != '\0')
-			 temp[t] = '\0';
+		 if (temp[b] != '\0')
+			 temp[b] = '\0';
 		 delete[]str_arr;
 		 str_arr = temp;
 		 this->count = strlen(str_arr) + 1;
@@ -913,13 +836,8 @@ String*operator+(const String & one, const String & two)
 
  void String::SortZA()
  {
-	 if (this->GetCount() > 2)
-	 {
-		 for (int i = 1; i < this->GetCount()-2; i++)
-	 for (int j = i; j>0 && (int)str_arr[j] > (int)str_arr[j - 1]; j--)
-		 swap(str_arr[j], str_arr[j - 1]);
-	 }
-	 
+	 SortAZ();
+	 Reverse(); 
  }
 
  void String::Shuffle()

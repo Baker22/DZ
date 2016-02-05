@@ -7,12 +7,6 @@ class Stack
 	int stack_size;
 	char *mass;
 	int top;
-	char *mass;
-	char*example;
-	char*pair1;
-	char*pair2;
-	char*pair3;
-	char*pair4;
 	void Resize()
 	{
 		stack_size *= 2;
@@ -29,29 +23,15 @@ public:
 		stack_size = 10;
 		mass = new char[stack_size];
 		top = 0;
-		example = nullptr;
-		this->pair1 = nullptr;
-		this->pair2 = nullptr;
-		this->pair3 = nullptr;
-		this->pair4 = nullptr;
 	}
-	Stack(char*text,char*examples,char*pair1,char*pair2,char*pair3,char*pair4)
-	{
-		stack_size = strlen(text)+1;
-		mass = text;
-		top = strlen(text);
-		this->example = examples;
-		this->pair1 =pair1;
-		this->pair2 =pair2;
-		this->pair3 =pair3;
-		this->pair4 =pair4;
-	}
+	
 	~Stack()
 	{
 		Clear();
 		delete[]mass;
 		mass = nullptr;
 	}
+
 	void Clear()
 	{
 		top = 0;
@@ -91,7 +71,6 @@ public:
 		else throw "Stack is empty!";
 	}
 	
-
 	bool Contains(int sim)
 	{
 		for (int i = 0; i < top; i++)
@@ -107,35 +86,63 @@ public:
 		if (!Contains(sim))
 			Push(sim);
 	}
+};
 
-	bool IfCorrect()
+bool IfLeftBrack(char sim)
+{
+	switch (sim)
+	{
+	case '(': return true; break;
+	case '{': return true; break;
+	case '[': return true; break;
+	case '<': return true; break;
+	default: return false; break;
+	}
+}
+
+bool IfRightBrack(char sim)
+{
+	switch (sim)
+	{
+	case ')': return true; break;
+	case '}': return true; break;
+	case ']': return true; break;
+	case '>': return true; break;
+	default: return false; break;
+	}
+}
+
+bool CheckPair(char peek, char sim)
+{
+	if('(',')') return true;
+	if ('{', '}')  return true;
+	if ('[', ']')  return true;
+	if ('<', '>')  return true;
+}
+
+
+bool CheckExample(char*example)
+{
+	if (example)
 	{
 		Stack*temp = new Stack;
-		for (int i = 0; i < top; i++)
+		for (int i = 0; i < strlen(example); i++)
 		{
-			for (int j = 0; j < strlen(this->example); j++)
+			char sim = example[i];
+			if (IfLeftBrack(sim))
+				temp->Push(sim);
+			if (IfRightBrack(sim))
 			{
-				if (this->mass[i] == this->example[j])
-				{
-					char sim_a = (temp->GetPeek());
-					temp->Push(this->example[i]);
-					char sim_b= (temp->GetPeek());
-					char*a(sim_a,sim_b)
-					if()
-					{
-						
-					}
-				}
-					temp->Push(this->example[i])
-					
-				if (temp->GetPeek())
+				char peek = temp->GetPeek();
+				if (CheckPair(peek, sim))
+					temp->Pop();
 			}
 				
 		}
-			
+		return temp->IsEmpty();
 	}
-};
 
+}
 void main()
 {
 	system("title Пользовательский адаптер Stack (динамический массив)");
@@ -153,14 +160,7 @@ void main()
 	while (st->IsEmpty() == false)
 		cout << st->Pop() << "  ";
 	cout << "\n\n";
-	char *example = ("(){}[]<>");
-	char *pair1 = ("()");
-	char *pair2 = ("{}");
-	char *pair3 = ("[]");
-	char *pair4 = ("<>");
-	char *text = ("(153 + 20)*{ 83 - 5 }-<1000>[bingo]");
-	Stack Ariphmetic(text,example,pair1,pair2,pair3,pair4);
 
-	delete[]st;
-	st = nullptr;
+	char*ex = ("{(100+200*<300/50>/[80!=10]}");
+	cout<<CheckExample(ex);
 }

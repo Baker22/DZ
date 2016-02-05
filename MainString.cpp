@@ -106,7 +106,7 @@ void main()
 	i.Concat(123);
 	i.PrintLn();
 	
-	i.Concat(123.689);
+	i.Concat(123.689,7);
 	i.PrintLn();
 	
 	i.Concat(&d, 3);
@@ -205,4 +205,6 @@ void main()
 	//bas.Replace(a_a, b_b);
 	bas.PrintLn();
 	cout<<bas.IndexOf("one")<<endl;
+	bas.Concat(354.098, 7);
+	bas.PrintLn();
 }

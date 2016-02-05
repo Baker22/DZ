@@ -391,9 +391,9 @@ String*operator+(const String & one, const String & two)
 	 *this += temp;
  }
 
- void String::Concat(double num)
+ void String::Concat(double num,int elems)
  {
-	 int _int = (int)num;
+	 /*int _int = (int)num;
 	 int size_int = 1;
 	 char*temp = new char[250];
 	 for (uint i = _int; i > 0; i /= 10, size_int++);
@@ -415,7 +415,10 @@ String*operator+(const String & one, const String & two)
 	 char*temp2 = new char[250];
 	 _itoa_s(_double, temp2, size_double, 10);
 	 strcat_s(temp, 250, temp2);
-	 *this += temp;
+	 *this += temp;*/
+	 char*temp = new char[elems + 1];
+	  _gcvt_s(temp, 10,num,elems+1 );
+	  *this += temp;
  }
 
  void String::Concat(String*other, int count)

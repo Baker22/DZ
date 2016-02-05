@@ -161,6 +161,6 @@ void main()
 		cout << st->Pop() << "  ";
 	cout << "\n\n";
 
-	char*ex = ("{(100+200*<300/50>/[80!=10]}");
+	char*ex = ("{(100+200)*<300/50>/[80!=10]}");
 	cout<<CheckExample(ex);
 }

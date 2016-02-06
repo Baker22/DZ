@@ -170,8 +170,6 @@ Elem *SingleLinkedList::GetElemAt(int index)
 			return temp;
 			temp = temp->next;
 		}
-		
-		temp = temp->next;
 	}
 }
 

@@ -10,14 +10,15 @@ class String
 	uint capacity;
 	uint count;
 public:
-	String();//конструктор по умолчанию, который создаёт пустую строку (но capacity= 80)
-	explicit String(uint capacity);//explicit-конструктор с 1 параметром типа int (задаёт capacity, с проверкой что вместительность больше 10)
-	void SetCapacity(uint capacity);
-	String(const char *str);// (формирует строку наоснове переданного указателя на массив char[], с проверкой - не пустой ли указатель!)
-	String(const String & origin);//конструктор копирования)
-	String(char *str, uint capacity);//конструктор с 2 параметрами- char* и int (указатель на строку, вместительность)
-    String(String& arr, int capacity);//конструктор с 2 параметрами - String и int (указатель на строку, вместительность)
+	String():String("\0", 80){};//конструктор по умолчанию, который создаёт пустую строку (но capacity= 80)
+	explicit String(uint capacity):String("\0", capacity){};//explicit-конструктор с 1 параметром типа int (задаёт capacity, с проверкой что вместительность больше 10)
+	String(const char *str):String(str, strlen(str)+80){};// (формирует строку наоснове переданного указателя на массив char[], с проверкой - не пустой ли указатель!)
+	String(const char *str, uint capacity);//конструктор с 2 параметрами- char* и int (указатель на строку, вместительность)
+	String(String& arr, int capacity) :String(arr.str_arr, capacity){};//конструктор с 2 параметрами - String и int (указатель на строку, вместительность)
+	
 	~String();
+	String(const String & origin);//конструктор копирования)
+	void SetCapacity(uint capacity);
 	void Initialize(uint count, uint capacity, char*str);
 	int GetCount()const{ return this->count; }// -длина строки
 	int GetCapacity()const{ return this->capacity; }//- вместительность строки
@@ -54,8 +55,8 @@ public:
 	void Concat(double num, int elems);//- присоединить к нашей строке переданную строку
 	void Concat(String*other,int count);//- присоединить к нашей строке по очереди count элементов массива String'ов
 	bool Contains(char*text);// -проверить, содержится ли в нашей строке переданная подстрока(в любой позиции)
-	bool EndsWith(char*text);//- проверить, заканчивается ли наша строка текстом, который передан в параметре
-	bool StartsWith(char*text);//- проверить, начинается ли наша строка текстом, который передан в параметре
+	bool EndsWith(const char*text)const;//- проверить, заканчивается ли наша строка текстом, который передан в параметре
+	bool StartsWith(const char*text)const;//- проверить, начинается ли наша строка текстом, который передан в параметре
 	void CopyTo(String& other);//- скопировать текст нашей строки в другую строку
 	int IndexOf(char sim);//- проверка на вхождение символа в строку, в результате работы возвращает индекспервого найденного символа(от начала строки).eсли ничего не найдено,возвращает - 1.
 	int LastIndexOf(char sim);//- проверка на вхождение символа в строку, в результате работы возвращает индекспоследнего найденного символа(поиск с конца строки).eсли ничего ненайдено, возвращает - 1.
@@ -92,7 +93,7 @@ public:
 	static int Compare(const String& one, const char* two);
 };
     
-    String*operator+(const String & one, const String & two);
+    String* operator+(const String & one, const String & two);
     String* operator+ (const String & origin,const char* str);//- реализация конкатенации 
 	String* operator+(const char*str,const String & origin);
 	String* operator+(const String & origin,const char sim);

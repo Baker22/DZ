@@ -112,8 +112,8 @@ void main()
 	i.Concat(&d, 3);
 	i.PrintLn();
 	cout<<i.Contains("test")<<endl;
-	cout << i.EndsWith("tes")<<endl;
-	cout << i.StartsWith("testo") << endl;
+	cout << i.EndsWith("ts")<<endl;
+	cout << i.StartsWith("est") << endl;
 	i.CopyTo(a);
 	a.Resize(10);
 	a.PrintLn();

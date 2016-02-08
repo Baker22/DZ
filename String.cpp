@@ -1,31 +1,8 @@
 #include"String.h"
 
 
-String::String()
-{
-	count=1;
-    capacity=80;
-	str_arr = new char[80];
-	*str_arr = '\0';
-}
 
-String::String(uint capacity) 
-{
-	count = 0;
-	SetCapacity(capacity);
-	str_arr = new char[this->capacity];
-}
-
-String::String(const char *str)
-{
-	if (!str) return;
-	capacity = strlen(str)+80;
-	str_arr = new char[capacity];
-	strcpy_s(str_arr, strlen(str) + 1, str);
-	count = strlen(str_arr)+1;
-}
-
-String::String(char *str, uint capacity)
+String::String(const char *str, uint capacity)
 {
 	if (!str) return;
 	if (capacity<strlen(str)+1)
@@ -38,24 +15,7 @@ String::String(char *str, uint capacity)
 
 String::String(const String & origin)
 {
-	this->count = origin.count;
-	char*temp = new char[origin.GetCapacity()];
-	strcpy_s(temp, strlen(origin.str_arr) + 1, origin.str_arr);
-	delete[]str_arr;
-	str_arr = temp;
-	this->capacity = origin.GetCapacity();
-}
-
-String::String(String& arr, int capacity)
-{
-	this->capacity = capacity;
-	if (capacity < arr.GetCount()) 
-		Resize((capacity+arr.GetCount())*2);
-	char*temp = new char[this->GetCapacity()];
-	strcpy_s(temp, strlen(arr.GetChar()) + 1, arr.GetChar());
-	delete[]str_arr;
-	str_arr = temp;
-	this->count = strlen(this->str_arr)+1;
+	*this =origin;
 }
 
 String::~String()
@@ -188,13 +148,13 @@ int String::Compare(const String& one, const char* two)
 
 String*operator+(const String & one, const String & two)
  {
-	 if (sizeof(one) == 0 && sizeof(two) == 0) return 0;
-	 char*st = new char[strlen(one.GetChar()) +strlen(two.GetChar())  + 1];
-	 strcpy_s(st, strlen(one.GetChar()) + 1,one.GetChar());
-	 strcat_s(st, strlen(one.GetChar()) + strlen(two.GetChar()) + 1,two.GetChar());
-	 String* temp = new String(st);
-	 return temp;
-	 return 0;
+	//if (sizeof(one) == 0 && sizeof(two) == 0) return 0;
+	char*st = new char[strlen(one.GetChar()) + strlen(two.GetChar()) + 1];
+	strcpy_s(st, strlen(one.GetChar()) + 1, one.GetChar());
+	strcat_s(st, strlen(one.GetChar()) + strlen(two.GetChar()) + 1, two.GetChar());
+	String* temp = new String(st);
+	return temp;
+	return 0;
  }
 
  String* operator+ (const String & origin,const char* str)
@@ -227,11 +187,11 @@ String*operator+(const String & one, const String & two)
  {
 	 if (this != &other)
 	 {
-	 this->count = other.GetCount();
-	 this->capacity = other.GetCapacity();
-	 delete[]this->str_arr;
-	 this->str_arr = other.GetChar();
-	 return *this;
+		 this->count = other.GetCount();
+		 this->capacity = other.GetCapacity();
+		 delete[]this->str_arr;
+		 this->str_arr = other.GetChar();
+		 return *this;
 	 }
 	 return *this;
  }
@@ -295,6 +255,7 @@ String*operator+(const String & one, const String & two)
 		 Resize((this->count + other.GetCount()) * 2);
 		 strcat_s(this->str_arr, this->capacity, other.str_arr);
 		 this->count = strlen(this->str_arr)+1;
+		 return *this;
 	 }
 	 return *this;
  }
@@ -393,29 +354,6 @@ String*operator+(const String & one, const String & two)
 
  void String::Concat(double num,int elems)
  {
-	 /*int _int = (int)num;
-	 int size_int = 1;
-	 char*temp = new char[250];
-	 for (uint i = _int; i > 0; i /= 10, size_int++);
-    _itoa_s(_int, temp, size_int, 10);
-     strcat_s(temp, 250, ",");
-
-	 double numm = num;
-	 int size_double = 1;
-	 do
-	 {
-		 numm*=10;
-		 size_double++;
-	 }
-	 while (numm - (int)numm>0&&numm<100000);
-	 
-	 int a =1;
-	 for (int i = 0; i < size_double-1; i++, a *= 10);
-	 int  _double= numm - _int*a;
-	 char*temp2 = new char[250];
-	 _itoa_s(_double, temp2, size_double, 10);
-	 strcat_s(temp, 250, temp2);
-	 *this += temp;*/
 	 char*temp = new char[elems + 1];
 	  _gcvt_s(temp, 10,num,elems+1 );
 	  *this += temp;
@@ -432,58 +370,29 @@ String*operator+(const String & one, const String & two)
  {
 	 if (GetCount())
 	 {
-		 int count = 0;
-	 for (int i = 0; i < GetCount(); i++)
-	 {
-		 if (str_arr[i] == text[0])
-		 {
-			 for (int j = 0; j < strlen(text); j++)
-			 if (str_arr[j] == text[j])
-				 count++;
-			 if (count == strlen(text)) break;
-		 }
-		 else count = 0;
-	 }
-	 return count;
+		 return (strstr(this->str_arr, text) == text);
 	 }
 	 return false;
  }
 
- bool String::EndsWith(char*text)
+ bool String::EndsWith(const char*text)const
  {
 	 if (GetCount())
 	 {
-		 int count = 0;
-		 if (str_arr[GetCount()] == text[strlen(text)])
-		 {
-			 int i = GetCount()-1;
-			 for (int j =strlen(text)-1; j >=0; j--,i--)
-			 if (str_arr[i] == text[j])
-				 count++;
-			 if (count == strlen(text))
-				 return true;
-				 return false;
-		 }
-		 return false; 
+		 String a(*this);
+		 String b(text);
+		 b.Reverse();
+		 a.Reverse();
+		 return (strstr(a.str_arr,b.str_arr)==a.str_arr);
 	 }
 	 return false; 
 	 }
 
- bool String::StartsWith(char*text)
+ bool String::StartsWith(const char*text)const
  {
 	 if (GetCount())
 	 {
-		 int count = 0;
-		 if (str_arr[0] == text[0])
-		 {
-			 for (int j = 0; j < strlen(text); j++)
-			 if (str_arr[j] == text[j])
-				 count++;
-			 if (count == strlen(text))
-				 return true;
-			 return false;
-		 }
-		 else return false;
+		 return (strstr(this->str_arr, text) == this->str_arr);
 	 }
 	 return false;
  }

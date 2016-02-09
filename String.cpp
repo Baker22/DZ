@@ -146,37 +146,37 @@ int String::Compare(const String& one, const char* two)
 	return Compare(one,str);
 }
 
-String*operator+(const String & one, const String & two)
+String operator+(const String & one, const String & two)
  {
 	//if (sizeof(one) == 0 && sizeof(two) == 0) return 0;
 	char*st = new char[strlen(one.GetChar()) + strlen(two.GetChar()) + 1];
 	strcpy_s(st, strlen(one.GetChar()) + 1, one.GetChar());
 	strcat_s(st, strlen(one.GetChar()) + strlen(two.GetChar()) + 1, two.GetChar());
-	String* temp = new String(st);
+	String temp(st);
 	return temp;
 	return 0;
  }
 
- String* operator+ (const String & origin,const char* str)
+ String operator+ (const String & origin,const char* str)
 {
 	 String st(str);
 	 return origin + st; 
 }
 
- String* operator+(const char*str, const String & origin)
+ String operator+(const char*str, const String & origin)
  {
 	 String st(str);
 	 return st+origin; 
  }
 
- String* operator+(const String & origin, const char sim)
+ String operator+(const String & origin, const char sim)
  {
 	 char*str = ( sim, '\0' );
 	 String st(str);
 	 return origin + st;
  }
 
- String* operator+(const char sim, const String & origin)
+ String operator+(const char sim, const String & origin)
  {
 	 char*str = ( sim, '\0' );
 	 String st(str);
@@ -779,9 +779,9 @@ String*operator+(const String & one, const String & two)
 
  void String::Insert(String* str, int index)
  {
-	 if (index < this->GetCount() - 1&&index > 0)
+	 if (index < this->GetCount() - 1&&index >= 0)
 	 {
-		 if (index + this->GetCount()>this->capacity)
+		 if (index + this->GetCount()+2>this->capacity)
 			 Resize(index + this->capacity + 80);
 			 char*temp = new char[this->GetCapacity()];
 			 uint i = 0;

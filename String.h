@@ -93,8 +93,8 @@ public:
 	static int Compare(const String& one, const char* two);
 };
     
-    String* operator+(const String & one, const String & two);
-    String* operator+ (const String & origin,const char* str);//- реализация конкатенации 
-	String* operator+(const char*str,const String & origin);
-	String* operator+(const String & origin,const char sim);
-	String* operator+(const char sim,const String & origin);
+    String operator+(const String & one, const String & two);
+    String operator+ (const String & origin,const char* str);//- реализация конкатенации 
+	String operator+(const char*str,const String & origin);
+	String operator+(const String & origin,const char sim);
+	String operator+(const char sim,const String & origin);

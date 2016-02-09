@@ -71,8 +71,8 @@ void main()
 	cout << endl;
 	cout << a << b << c << d << i << endl;
 	
-	String *o = a + b;
-	o->Print();
+	String o = a + b;
+	o.Print();
 	//cin >> b;
 	//cout << b;
 	
@@ -88,7 +88,7 @@ void main()
 	String _double("345.202");
 	double temp_2 = _double;
 	cout << temp_2<<endl;
-	String *p = _int + _double;
+	String p = _int + _double;
 	d.PrintLn();
 	
 	
@@ -196,15 +196,28 @@ void main()
 	
 	String a_a("three");
 	String b_b("!two!!two!");
-	String *c_c = ( "two"+ a_a);
-	c_c->PrintLn();
+	String c_c = ( "two"+ a_a);
+	c_c.PrintLn();
 	cout<<a_a.operator!= (b_b)<<endl;
-	cout << c_c->CompareTo("twoonee") << endl;
-	c_c->LastIndexOf('a');
+	cout << c_c.CompareTo("twoonee") << endl;
+	c_c.LastIndexOf('a');
 	String bas("threetwoone");
 	//bas.Replace(a_a, b_b);
 	bas.PrintLn();
 	cout<<bas.IndexOf("one")<<endl;
 	bas.Concat(354.098, 7);
 	bas.PrintLn();
+	String zz("Alex");
+	zz.PrintLn();
+	String ppp = (zz + zz);
+	ppp.PrintLn();
+	String ccc = "A";
+	ccc.Resize(5);
+    String aaa = "1";
+	for (int i = 0; i < 1000; i++)
+	{
+		ccc.Insert(&aaa, 0); // не вставляет
+		cout << ccc << "\n";
+	}
+	cout << "OK!";
 }

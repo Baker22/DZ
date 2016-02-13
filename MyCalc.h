@@ -162,7 +162,7 @@ bool IfOper(char sim)
 
 bool IfNumber(char sim)
 {
-	if (sim > 47 && sim < 58)
+	if (sim > 47 && sim < 58 || sim==46) 
 		return true;
 	return false;
 }
@@ -188,7 +188,7 @@ double PolNot(char*example)
 		Stack <double>Numbs;
 		char*sims = new char[10];
 		int N = 0;
-		for (int j = 0; !IfNumber(example[j]); j++)
+		for (int j = 0;!IfNumber(example[j]); j++)
 		{
 			if (Prior(example[j]) == 3)
 			{

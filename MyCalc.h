@@ -80,6 +80,26 @@ public:
 
 };
 
+
+class MyCalc
+{
+	Stack<char> Oper;
+	Stack<double> Numbs;
+	char*sims;
+	char*example;
+public:
+	MyCalc()
+	{
+		sims=new char[15];
+	}
+	MyCalc(char*example)
+	{
+		this->example = example;
+	}
+	~MyCalc()
+	{
+		delete[]sims;
+	}
 bool IfLeftBrack(char sim)
 {
 	switch (sim)
@@ -139,6 +159,8 @@ int Prior(char sim)
 {
 	switch (sim)
 	{
+	case '^':
+		return 4; break;
 	case '*':
 	case '/':
 		return 3; break;
@@ -167,35 +189,33 @@ bool IfNumber(char sim)
 	return false;
 }
 
-void Calculate(Stack <double> &Numbs,char sim)
+void Calculate(char sim)
 {
 	double b = Numbs.Pop();
 	double a = Numbs.Pop();
 	switch (sim)
 	{
-	case '+':Numbs.Push(a +b ); break;
+	case '+':Numbs.Push(a + b); break;
 	case '-':Numbs.Push(a - b); break;
 	case '/':Numbs.Push(a / b); break;
 	case '*':Numbs.Push(a * b); break;
+	case '^':Numbs.Push(pow(a,b)); break;
 	}
 }
  
-double PolNot(char*example)
+double PolNot()
 {
 	if (CheckExample(example))
 	{
-		Stack <char>Oper;
-		Stack <double>Numbs;
 		char*sims = new char[10];
 		int N = 0;
 		for (int j = 0;!IfNumber(example[j]); j++)
 		{
-			if (Prior(example[j]) == 3)
+			if (Prior(example[j]) == 3||Prior(example[j]) == 4)
 			{
 				cerr << "incorrect expression" << endl;//как ни кручу, не получается у меня сделать "throw"
 				return 0;
 			}
-			
 		}
 		for (int i = 0;example[i] != '='&& example[i] != '\0'; i++)
 		{
@@ -213,7 +233,7 @@ double PolNot(char*example)
 				else
 				{
 					while ((!Oper.IsEmpty()) && (Prior(example[i]) <= Prior(Oper.GetPeek())))
-						Calculate(Numbs,Oper.Pop());
+						Calculate(Oper.Pop());
 					Oper.Push(example[i]);
 				}
 			}
@@ -234,7 +254,7 @@ double PolNot(char*example)
 				    N = 0;
 				    sims[N] = '\0';
 					}
-					Calculate(Numbs,Oper.Pop());
+					Calculate(Oper.Pop());
 				}
 				Oper.Pop();
 			}
@@ -247,13 +267,13 @@ double PolNot(char*example)
 				    N = 0;
 				    sims[N] = '\0';
 					}
-			      Calculate(Numbs, Oper.Pop());
+			      Calculate( Oper.Pop());
 		       }	
 		     return Numbs.Pop();
-		
-		
 		}
 	return 0;
 }
+
+};
 
 

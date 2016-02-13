@@ -115,31 +115,6 @@ class PoliceData
 		root->parent =nullptr;
 		root = temp;
 	}
-public:
-	PoliceData()
-	{
-		root = nullptr;
-	}
-	~PoliceData();
-	bool IsEmpty()
-	{
-		return root == 0;
-	}
-
-
-	Node*IfInBase(char*carnum)
-	{
-		Node*temp = new Node;
-		temp = root;
-		while (temp->main->num != carnum||temp!=nullptr)
-		{
-			if (temp->main->num > carnum)
-				temp = temp->left;
-			else
-				temp = temp->right;
-		}
-		return temp;
-	}
 	void AddNode(char*carnum, char*Violation)
 	{
 		if (!IfInBase(carnum))
@@ -167,22 +142,48 @@ public:
 			IfInBase(carnum)->main->list.AddTail(Violation);
 		}
 	}
-	void PrintBase()
+public:
+	PoliceData()
 	{
-
+		root = nullptr;
+		count = 0;
+	}
+	~PoliceData();
+	bool IsEmpty()
+	{
+		return root == 0;
+	}
+	Node*IfInBase(char*carnum)
+	{
+		Node*temp = new Node;
+		temp = root;
+		while (temp->main->num != carnum||temp!=nullptr)
+		{
+			if (temp->main->num > carnum)
+				temp = temp->left;
+			else
+				temp = temp->right;
+		}
+		return temp;
+	}
+	
+	/*void PrintBase()
+	{
+		;
 	}
 	void AddViolation(char*carnum, char*Violation)
 	{
 		if (IsEmpty())
 			AddRoot(carnum, Violation);	
-	}
+		AddNode(carnum, Violation);
+	}*/
 };
 
 void main()
 {
-	Violation a;
-	a.AddTail("Driving with hangover");
-	a.AddTail("Sleepping at the wheel");
-	a.AddTail("Sleepping at the wheel");
-	a.GetViolation();
+	PoliceData a;
+	/*a.AddViolation("aa9988b","Driving with hangover");
+	a.AddViolation("aa9988b","Sleepping at the wheel");
+	a.AddViolation("aa9988b","Sleepping at the wheel");*/
+	
 }

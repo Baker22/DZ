@@ -3,15 +3,14 @@ using namespace std;
 
 typedef unsigned int uint;
 
-struct Elem
+ class Violation
+{
+	struct Elem
 {
 	int size;
 	char*text;
 	Elem*next;
 };
-
-class Violation
-{
 	Elem*tail;
 	Elem*head;
 	uint list_count;
@@ -87,22 +86,21 @@ public:
 	}
 };
 
-struct CarInfo
+class PoliceData
+{
+	struct CarInfo
 {
 	char*num;
 	Violation list;
 };
-
-struct Node
+	struct Node
 {
+	
 	CarInfo*main;
 	Node *left;
 	Node *right;
 	Node *parent;
 };
-
-class PoliceData
-{
 	Node*root;
 	uint count;
 	void AddRoot(char*carnum, char*Violation)
@@ -148,7 +146,7 @@ public:
 		root = nullptr;
 		count = 0;
 	}
-	~PoliceData();
+	~PoliceData(){};
 	bool IsEmpty()
 	{
 		return root == 0;
@@ -167,7 +165,7 @@ public:
 		return temp;
 	}
 	
-	/*void PrintBase()
+	void PrintBase()
 	{
 		;
 	}
@@ -176,14 +174,17 @@ public:
 		if (IsEmpty())
 			AddRoot(carnum, Violation);	
 		AddNode(carnum, Violation);
-	}*/
+	}
 };
 
 void main()
 {
 	PoliceData a;
-	/*a.AddViolation("aa9988b","Driving with hangover");
-	a.AddViolation("aa9988b","Sleepping at the wheel");
+	a.AddViolation("aa9988b","Driving with hangover");
+	/*a.AddViolation("aa9988b","Sleepping at the wheel");
 	a.AddViolation("aa9988b","Sleepping at the wheel");*/
-	
+	/*Violation a;
+	a.AddTail("char*text");
+	a.AddTail("chaext");
+	a.GetViolation();*/
 }

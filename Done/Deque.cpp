@@ -1,7 +1,6 @@
 #include<iostream>
 #include"DoubleLinkedList.h"
 using namespace std;
-
 class Deque
 {
 	DoubleLinkedList d;

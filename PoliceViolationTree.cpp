@@ -107,7 +107,7 @@ public:
 	{
 		left = right = parent = nullptr;
 	}
-	~Node(){};
+	~Node(){ delete[]carnum; };
 	friend PoliceData;
 };
 

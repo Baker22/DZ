@@ -37,6 +37,7 @@ public:
 		SetAge(age);
 	}
 
+	~Student(){};
 	string GetCopy(string field)
 	{
 		string temp = field;
@@ -96,6 +97,7 @@ public:
 		SetWork(name_of_course_work);
 		SetProfessorName(professor_name);
 	}
+	~Aspirant(){};
 	string GetFullInfo()
 	{
 		string temp;

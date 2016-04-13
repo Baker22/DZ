@@ -47,8 +47,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpszCmdLine, 
 BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HWND hadleToProcess = NULL;
-	//SetFocus(hWnd);
-
 	switch (message)
 	{
 	case WM_CLOSE:

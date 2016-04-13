@@ -33,7 +33,7 @@ INT WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR szCmdL
 		HWND hWindow = CreateWindowEx(0, szClassWindow, TEXT("Enumerate Top-Level Windows"),
 			WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL,
 			NULL, hInstance, NULL);
-
+		SetTimer(hWindow, 1, 10000, NULL);
 		ShowWindow(hWindow, nCmdShow);
 		UpdateWindow(hWindow);
 
@@ -64,7 +64,6 @@ BOOL CALLBACK EnumWindowsProc(HWND hWindow, LPARAM lParam)
 LRESULT CALLBACK WindowProcedure(HWND hWindow, UINT nMessage, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT result = 0;
-	SetTimer(hWindow, 1, 500, NULL);
 	switch (nMessage)
 	{
 	case WM_DESTROY:

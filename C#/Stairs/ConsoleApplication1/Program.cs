@@ -6,15 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    /*class Stairs
-    {
-        public int spaceStair = 0;
-        public int downSpace = 2;
-        public void Build
-        {
-            public Console.WriteLine();
-        }
-    }*/
     class Program
     {
         static int stairs = Convert.ToInt32(Console.ReadLine());
@@ -38,9 +29,7 @@ namespace ConsoleApplication1
                         Console.Write(' ');
                     Console.WriteLine("***");
                 }
-            }
-                
-                
+            }       
         }
     }
 }

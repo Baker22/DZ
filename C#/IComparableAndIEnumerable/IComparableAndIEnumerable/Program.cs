@@ -76,10 +76,10 @@ namespace Students_Group
         {
             Console.WriteLine("{0}. {1}. {2}", this.day, this.month, this.year);
         }
-        
-            
+
+
     }
-    public class Student:IComparable
+    public class Student : IComparable
     {
         string phone;
         string name;
@@ -223,35 +223,35 @@ namespace Students_Group
                 return 0;
             else return -1;
         }
-       /* public class SortByName:IComparer
-        {
-            public int Compare(Object obj1,Object obj2)
-            {
-                Student st1 = obj1 as Student;
-                Student st2 = obj2 as Student;
-                return String.Compare(st1.name, st2.name);
-            }
-        }
-        public class SortBySecondName : IComparer
-        {
-            public int Compare(Object obj1, Object obj2)
-            {
-                Student st1 = obj1 as Student;
-                Student st2 = obj2 as Student;
-                return String.Compare(st1.secondname, st2.secondname);
-            }
-        }
-        public class SortByLastName : IComparer
-        {
-            public int Compare(Object obj1, Object obj2)
-            {
-                Student st1 = obj1 as Student;
-                Student st2 = obj2 as Student;
-                return String.Compare(st1.lastname, st2.lastname);
-            }
-        }*/
+         public class SortByName:IComparer
+         {
+             public int Compare(Object obj1,Object obj2)
+             {
+                 Student st1 = obj1 as Student;
+                 Student st2 = obj2 as Student;
+                 return String.Compare(st1.name, st2.name);
+             }
+         }
+         public class SortBySecondName : IComparer
+         {
+             public int Compare(Object obj1, Object obj2)
+             {
+                 Student st1 = obj1 as Student;
+                 Student st2 = obj2 as Student;
+                 return String.Compare(st1.secondname, st2.secondname);
+             }
+         }
+         public class SortByLastName : IComparer
+         {
+             public int Compare(Object obj1, Object obj2)
+             {
+                 Student st1 = obj1 as Student;
+                 Student st2 = obj2 as Student;
+                 return String.Compare(st1.lastname, st2.lastname);
+             }
+         }
     }
-    public class Group
+    public class Group:IEnumerable
     {
         Student[] students;
         ushort group_size;
@@ -371,8 +371,64 @@ namespace Students_Group
             students = temp;
             SetSize();
         }
-
+        public GroupEnumerator GetEnumerator()
+        {
+            return new GroupEnumerator(students);
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator)GetEnumerator();
+        }
+        public void Print()
+        {
+            foreach (Student item in students)
+                Console.WriteLine(item.FullName());
+        }
+        
     }
+     public class GroupEnumerator:IEnumerator
+        {
+            public Student[] _students;
+            int position = -1;
+
+            public GroupEnumerator(Student[] list)
+          {
+             _students = list;
+          }
+
+          public bool MoveNext()
+          {
+            position++;
+            return (position < _students.Length);
+          }
+
+          public Student Current
+           {
+               get
+               {
+                   try
+                   {
+                       return _students[position];
+                   }
+                   catch (IndexOutOfRangeException)
+                   {
+                       throw new InvalidOperationException();
+                   }
+               }
+           }
+          public void Reset()
+          {
+              position = -1;
+          }
+          object IEnumerator.Current
+          {
+              get
+              {
+                  return Current;
+              }
+          }
+
+       }
     class Program
     {
         static void Main(string[] args)
@@ -385,20 +441,24 @@ namespace Students_Group
             Student c = new Student("0663567899", "Alex", "Dmitrievich", "Afanasiev");
             Console.WriteLine(a.FullName());
             Console.WriteLine(b.FullName());
-            
+
             Dob bb = new Dob(22, 10, 1981);
             b.SetBirthday(bb);
             b.StudentInfo();
             Group studs = new Group();
             studs.AddStudToGroup(b);
             studs.AddStudToGroup(a);
+            studs.AddStudToGroup(c);
             Console.WriteLine(studs.GroupInfo());
             studs.GroupName = "newgrowp";
             studs.GroupSpec = "Killers";
             studs.CourseNum = "2016";
             Console.WriteLine(studs.GroupInfo());
-           // Console.WriteLine(a.CompareTo(b));
+            Console.WriteLine(a.CompareTo(b));
+            studs.Print();
             
+            
+
         }
     }
 }

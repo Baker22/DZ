@@ -384,7 +384,10 @@ namespace Students_Group
             foreach (Student item in students)
                 Console.WriteLine(item.FullName());
         }
-        
+        public void SortByName()
+        {
+
+        }
     }
      public class GroupEnumerator:IEnumerator
         {
